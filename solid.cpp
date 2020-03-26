@@ -20,6 +20,11 @@ Solid::Solid(Point inputCenter, RGBAcolor inputColor,
     initializeCorners();
 }
 
+ void Solid::initializeCorners()
+{
+
+}
+
 std::vector<Point> Solid::getCorners() const
 {
     return corners;

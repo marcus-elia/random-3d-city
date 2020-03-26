@@ -21,7 +21,7 @@ public:
             double inputXWidth, double inputYWidth, double inputZWidth, RGBAcolor inputLineColor);
 
     // Initialization
-    virtual void initializeCorners() = 0;
+    virtual void initializeCorners();
 
     // Getters
     std::vector<Point> getCorners() const;
