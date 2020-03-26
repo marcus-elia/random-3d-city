@@ -37,7 +37,7 @@ void RecPrism::rotate(double thetaX, double thetaY, double thetaZ)
 
 void RecPrism::lookAt(Point &p)
 {
-    
+
 }
 
 void RecPrism::draw() const
