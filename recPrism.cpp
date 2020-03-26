@@ -9,7 +9,7 @@ RecPrism::RecPrism(Point inputCenter, RGBAcolor inputColor,
         Solid(inputCenter, inputColor, inputXWidth, inputYWidth, inputZWidth, inputLineColor),
         MovableObject()
 {
-    
+
 }
 
 void RecPrism::initializeCorners()
