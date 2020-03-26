@@ -27,6 +27,30 @@ Player GameManager::getPlayer() const
 {
     return solids;
 }*/
+bool GameManager::getWKey()
+{
+    return wKey;
+}
+bool GameManager::getAKey()
+{
+    return aKey;
+}
+bool GameManager::getSKey()
+{
+    return sKey;
+}
+bool GameManager::getDKey()
+{
+    return dKey;
+}
+bool GameManager::getRKey()
+{
+    return rKey;
+}
+bool GameManager::getCKey()
+{
+    return cKey;
+}
 
 void GameManager::setWKey(bool input)
 {

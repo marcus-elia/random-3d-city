@@ -21,6 +21,12 @@ public:
     // Getters
     Player getPlayer() const;
     std::vector<std::unique_ptr<Solid>> getSolids() const;
+    bool getWKey();
+    bool getAKey();
+    bool getSKey();
+    bool getDKey();
+    bool getRKey();
+    bool getCKey();
 
     // Setters
     void setWKey(bool input);
