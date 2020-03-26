@@ -3,8 +3,8 @@
 
 Player::Player()
 {
-    location = {2.0, 3.0, 6.0};
-    lookingAt = {0,0,0};
+    location = {80, 30, 60.0};
+    lookingAt = {0,30,0};
     up = {0, 1, 0};
     speed = 2;
     velocity = {0,0,0};
@@ -79,7 +79,7 @@ void Player::setVelocity(bool wKey, bool aKey, bool sKey, bool dKey, bool rKey, 
     }
 
     // The angle the player is facing in the xz plane
-    double xzAngle = atan2(lookingAt.y - location.y, lookingAt.x - location.x);
+    double xzAngle = atan2(lookingAt.z - location.z, lookingAt.x - location.x);
 
     // The angle the player should move based on input
     double angleToMove;
