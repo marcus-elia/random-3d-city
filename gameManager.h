@@ -11,6 +11,9 @@ class GameManager
 private:
     Player player;
 
+    // Controls
+    bool wKey, aKey, sKey, dKey, rKey, cKey;
+
     std::vector<std::unique_ptr<Solid>> solids;
 public:
     GameManager();
@@ -18,6 +21,14 @@ public:
     // Getters
     Player getPlayer() const;
     std::vector<std::unique_ptr<Solid>> getSolids() const;
+
+    // Setters
+    void setWKey(bool input);
+    void setAKey(bool input);
+    void setSKey(bool input);
+    void setDKey(bool input);
+    void setRKey(bool input);
+    void setCKey(bool input);
 
     // Camera
     Vector3 getCameraLocation() const;

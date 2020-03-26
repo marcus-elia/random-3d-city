@@ -23,9 +23,40 @@ Player GameManager::getPlayer() const
 {
     return player;
 }
-std::vector<std::unique_ptr<Solid>> GameManager::getSolids() const
+/*std::vector<std::unique_ptr<Solid>> GameManager::getSolids() const
 {
     return solids;
+}*/
+
+void GameManager::setWKey(bool input)
+{
+    wKey = input;
+    player.setVelocity(wKey, aKey, sKey, dKey, rKey, cKey);
+}
+void GameManager::setAKey(bool input)
+{
+    aKey = input;
+    player.setVelocity(wKey, aKey, sKey, dKey, rKey, cKey);
+}
+void GameManager::setSKey(bool input)
+{
+    sKey = input;
+    player.setVelocity(wKey, aKey, sKey, dKey, rKey, cKey);
+}
+void GameManager::setDKey(bool input)
+{
+    dKey = input;
+    player.setVelocity(wKey, aKey, sKey, dKey, rKey, cKey);
+}
+void GameManager::setRKey(bool input)
+{
+    rKey = input;
+    player.setVelocity(wKey, aKey, sKey, dKey, rKey, cKey);
+}
+void GameManager::setCKey(bool input)
+{
+    cKey = input;
+    player.setVelocity(wKey, aKey, sKey, dKey, rKey, cKey);
 }
 
 // Camera
