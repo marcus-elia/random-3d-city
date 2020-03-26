@@ -13,6 +13,12 @@ public:
 
     void initializeCorners();
 
+    void move(double deltaX, double deltaY, double deltaZ);
+
+    void rotate(double thetaX, double thetaY, double thetaZ);
+
+    void lookAt(Point &p);
+
     void draw() const;
     void drawLines() const;
     void drawFaces() const;

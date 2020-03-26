@@ -24,6 +24,22 @@ void RecPrism::initializeCorners()
     corners.push_back({center.x - xWidth/2, center.y - yWidth/2, center.z - zWidth/2});
 }
 
+
+void RecPrism::move(double deltaX, double deltaY, double deltaZ)
+{
+
+}
+
+void RecPrism::rotate(double thetaX, double thetaY, double thetaZ)
+{
+
+}
+
+void RecPrism::lookAt(Point &p)
+{
+    
+}
+
 void RecPrism::draw() const
 {
     drawLines();
