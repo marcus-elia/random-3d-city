@@ -19,6 +19,13 @@
 
 const double PI = 3.14159265358979323846;
 
+struct Vector3
+{
+    double x;
+    double y;
+    double z;
+};
+
 struct Vector4
 {
     double x;
