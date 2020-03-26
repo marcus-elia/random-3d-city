@@ -1,7 +1,9 @@
 #include "graphics.h"
+#include "gameManager.h"
 
 GLdouble width, height;
 int wd;
+GameManager manager;
 
 void init()
 {
@@ -10,7 +12,8 @@ void init()
 }
 
 /* Initialize OpenGL Graphics */
-void initGL() {
+void initGL()
+{
     // Set "clearing" or background color
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Black and opaque
     glEnable(GL_DEPTH_TEST);
@@ -21,7 +24,8 @@ void initGL() {
               0.0, 1.0, 0.0); // up vector
 }
 
-void draw_axes() {
+void draw_axes()
+{
     glLineWidth(2.0);
     glBegin(GL_LINES);
     glColor3f(1.0, 0.0, 0.0);
@@ -38,7 +42,8 @@ void draw_axes() {
 
 /* Handler for window-repaint event. Call back when the window first appears and
  whenever the window needs to be re-painted. */
-void display() {
+void display()
+{
 
     // tell OpenGL to use the whole window for drawing
     glViewport(0, 0, width, height);
@@ -53,11 +58,19 @@ void display() {
     glEnable(GL_CULL_FACE);
     glPolygonMode(GL_FRONT, GL_FILL);
 
+    // Update where the camera is
+    Vector3 camLoc = manager.getCameraLocation();
+    Vector3 camLook = manager.getCameraLookingAt();
+    Vector3 camUp = manager.getCameraUp();
+    gluLookAt(camLoc.x, camLoc.y, camLoc.z,  // eye position
+              camLook.x, camLook.y, camLook.z,  // center position (not gaze direction)
+              camUp.x, camUp.y, camUp.z); // up vector
+
     /*
      * Draw here
      */
     draw_axes();
-    c.draw();
+    manager.draw();
 
     glFlush();  // Render now
 }
@@ -66,21 +79,57 @@ void display() {
 void kbd(unsigned char key, int x, int y)
 {
     // escape
-    if (key == 27) {
+    if (key == 27)
+    {
         glutDestroyWindow(wd);
         exit(0);
     }
 
-    switch(key) {
-        case 'x': c.rotate(PI / 100.0, 0, 0);
+    switch(key)
+    {
+        case 'w': manager.setWKey(true);
+            break;
+        case 'a': manager.setAKey(true);
+            break;
+        case 's': manager.setSKey(true);
+            break;
+        case 'd': manager.setDKey(true);
+            break;
+        case 'r': manager.setRKey(true);
+            break;
+        case 'c': manager.setCKey(true);
             break;
     }
 
     glutPostRedisplay();
 }
 
-void kbdS(int key, int x, int y) {
-    switch(key) {
+
+void kbu(unsigned char key, int x, int y)
+{
+    switch(key)
+    {
+        case 'w': manager.setWKey(false);
+            break;
+        case 'a': manager.setAKey(false);
+            break;
+        case 's': manager.setSKey(false);
+            break;
+        case 'd': manager.setDKey(false);
+            break;
+        case 'r': manager.setRKey(false);
+            break;
+        case 'c': manager.setCKey(false);
+            break;
+    }
+
+    glutPostRedisplay();
+}
+
+void kbdS(int key, int x, int y)
+{
+    /*switch(key)
+    {
         case GLUT_KEY_DOWN:
 
             break;
@@ -93,31 +142,36 @@ void kbdS(int key, int x, int y) {
         case GLUT_KEY_UP:
 
             break;
-    }
+    }*/
 
     glutPostRedisplay();
 }
 
-void cursor(int x, int y) {
+void cursor(int x, int y)
+{
 
     glutPostRedisplay();
 }
 
 // button will be GLUT_LEFT_BUTTON or GLUT_RIGHT_BUTTON
 // state will be GLUT_UP or GLUT_DOWN
-void mouse(int button, int state, int x, int y) {
+void mouse(int button, int state, int x, int y)
+{
 
     glutPostRedisplay();
 }
 
-void timer(int dummy) {
+void timer(int dummy)
+{
 
     glutPostRedisplay();
     glutTimerFunc(30, timer, dummy);
+    manager.tick();
 }
 
 /* Main function: GLUT runs as a console application starting at main()  */
-int main(int argc, char** argv) {
+int main(int argc, char** argv)
+{
 
     init();
 
@@ -139,6 +193,7 @@ int main(int argc, char** argv) {
     // register keyboard press event processing function
     // works for numbers, letters, spacebar, etc.
     glutKeyboardFunc(kbd);
+    glutKeyboardUpFunc(kbu);
 
     // register special event: function keys, arrows, etc.
     glutSpecialFunc(kbdS);
