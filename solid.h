@@ -13,10 +13,12 @@ protected:
     double xWidth;
     double yWidth;
     double zWidth;
+    RGBAcolor lineColor;
 public:
     // Constructors
     Solid();
-    Solid(Point inputCenter, RGBAcolor inputColor, double inputXWidth, double inputYWidth, double inputZWidth);
+    Solid(Point inputCenter, RGBAcolor inputColor,
+            double inputXWidth, double inputYWidth, double inputZWidth, RGBAcolor inputLineColor);
 
     // Initialization
     virtual void initializeCorners() = 0;
@@ -26,12 +28,14 @@ public:
     double getXWidth() const;
     double getYWidth() const;
     double getZWidth() const;
+    RGBAcolor getLineColor() const;
 
     // Setter
     void setCorners(std::vector<Point> inputCorners);
     void setXWidth(double inputXWidth);
     void setYWidth(double inputYWidth);
     void setZWidth(double inputZWidth);
+    void setLineColor(RGBAcolor inputLineColor);
 };
 
 #endif //RANDOM_3D_CITY_SOLID_H

@@ -5,15 +5,18 @@ Solid::Solid() : DrawableObject()
     xWidth = 1;
     yWidth = 1;
     zWidth = 1;
+    lineColor = {1,1,1,1};
     initializeCorners();
 }
 
-Solid::Solid(Point inputCenter, RGBAcolor inputColor, double inputXWidth, double inputYWidth, double inputZWidth)
+Solid::Solid(Point inputCenter, RGBAcolor inputColor,
+        double inputXWidth, double inputYWidth, double inputZWidth, RGBAcolor inputLineColor)
 : DrawableObject(inputCenter, inputColor)
 {
     xWidth = inputXWidth;
     yWidth = inputYWidth;
     zWidth = inputZWidth;
+    lineColor = inputLineColor;
     initializeCorners();
 }
 
