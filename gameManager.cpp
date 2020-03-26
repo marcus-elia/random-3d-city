@@ -2,19 +2,19 @@
 
 GameManager::GameManager()
 {
-    solids.push_back(RecPrism({0, 5, 0}, {0.2,0,1,1},
-            3,3, 10, {1,1,1,1}));
+    solids.push_back(std::unique_ptr<RecPrism>(new RecPrism({0, 5, 0}, {0.2,0,1,1},
+            3,3, 10, {1,1,1,1})));
 }
 
 void GameManager::draw() const
 {
-    for(const Solid &s : solids)
+    for(auto &s : solids)
     {
-        s.draw();
+        s->draw();
     }
 }
 
 void GameManager::tick()
 {
-    
+
 }

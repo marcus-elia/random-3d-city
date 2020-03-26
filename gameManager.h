@@ -2,12 +2,13 @@
 #define RANDOM_3D_CITY_GAMEMANAGER_H
 
 #include <vector>
+#include <memory>
 #include "recPrism.h"
 
 class GameManager
 {
 private:
-    std::vector<Solid> solids;
+    std::vector<std::unique_ptr<Solid>> solids;
 public:
     GameManager();
 
