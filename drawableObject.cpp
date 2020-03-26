@@ -29,3 +29,8 @@ void DrawableObject::setColor(RGBAcolor inputColor)
 {
     color = inputColor;
 }
+
+void DrawableObject::drawPoint(const Point &p) const
+{
+    glVertex3f(p.x, p.y, p.z);
+}

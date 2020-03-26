@@ -39,7 +39,8 @@ public:
 
     virtual void draw() const = 0;
 
-
+    // Makes a call to GL's vertex3f function
+    void drawPoint(const Point &p) const;
 };
 
 #endif //RANDOM_3D_CITY_DRAWABLEOBJECT_H
