@@ -19,9 +19,12 @@ void initGL()
     glEnable(GL_DEPTH_TEST);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    gluLookAt(2.0, 3.0, 6.0,  // eye position
-              0.0, 0.0, 0.0,  // center position (not gaze direction)
-              0.0, 1.0, 0.0); // up vector
+    Vector3 camLoc = manager.getCameraLocation();
+    Vector3 camLook = manager.getCameraLookingAt();
+    Vector3 camUp = manager.getCameraUp();
+    gluLookAt(camLoc.x, camLoc.y, camLoc.z,  // eye position
+              camLook.x, camLook.y, camLook.z,  // center position (not gaze direction)
+              camUp.x, camUp.y, camUp.z); // up vector
 }
 
 void draw_axes()
