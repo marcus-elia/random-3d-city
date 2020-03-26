@@ -2,14 +2,14 @@
 
 RecPrism::RecPrism() : Solid(), MovableObject()
 {
-
+    initializeCorners();
 }
 RecPrism::RecPrism(Point inputCenter, RGBAcolor inputColor,
         double inputXWidth, double inputYWidth, double inputZWidth, RGBAcolor inputLineColor) :
         Solid(inputCenter, inputColor, inputXWidth, inputYWidth, inputZWidth, inputLineColor),
         MovableObject()
 {
-
+    initializeCorners();
 }
 
 void RecPrism::initializeCorners()
