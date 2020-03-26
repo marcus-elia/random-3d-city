@@ -1,11 +1,13 @@
 #include "player.h"
+#include <cmath>
 
 Player::Player()
 {
     location = {2.0, 3.0, 6.0};
     lookingAt = {0,0,0};
     up = {0, 1, 0};
-    speed = 5;
+    speed = 2;
+    velocity = {0,0,0};
 }
 Player::Player(Vector3 inputLocation, Vector3 inputLookingAt, Vector3 inputUp, double inputSpeed)
 {
@@ -13,6 +15,7 @@ Player::Player(Vector3 inputLocation, Vector3 inputLookingAt, Vector3 inputUp, d
     lookingAt = inputLookingAt;
     up = inputUp;
     speed = inputSpeed;
+    velocity = {0,0,0};
 }
 
 // Getters
@@ -52,7 +55,91 @@ void Player::setSpeed(double inputSpeed)
 }
 
 
+void Player::setVelocity(bool wKey, bool aKey, bool sKey, bool dKey, bool rKey, bool cKey)
+{
+    bool forward = wKey && !sKey;
+    bool backward = !wKey && sKey;
+    bool left = aKey && !dKey;
+    bool right = !aKey && dKey;
+    bool ascending = rKey && !cKey; // name up already used :(
+    bool descending = !rKey && cKey;
+
+    // First figure out the vertical (y) velocity, since that is independent
+    if(ascending)
+    {
+        velocity.y = speed;
+    }
+    else if(descending)
+    {
+        velocity.y = -speed;
+    }
+    else
+    {
+        velocity.y = 0;
+    }
+
+    // The angle the player is facing in the xz plane
+    double xzAngle = atan2(lookingAt.y - location.y, lookingAt.x - location.x);
+
+    // The angle the player should move based on input
+    double angleToMove;
+    if(forward)
+    {
+        if(right)
+        {
+            angleToMove = xzAngle + PI/4;
+        }
+        else if(left)
+        {
+            angleToMove = xzAngle - PI/4;
+        }
+        else
+        {
+            angleToMove = xzAngle;
+        }
+    }
+    else if(backward)
+    {
+        if(right)
+        {
+            angleToMove = xzAngle - PI - PI/4;
+        }
+        else if(left)
+        {
+            angleToMove = xzAngle - PI + PI/4;
+        }
+        else
+        {
+            angleToMove = xzAngle - PI;
+        }
+    }
+    else
+    {
+        if(right)
+        {
+            angleToMove = xzAngle + PI/2;
+        }
+        else if(left)
+        {
+            angleToMove = xzAngle - PI/2;
+        }
+        else
+        {
+            velocity.x = 0;
+            velocity.z = 0;
+            return;
+        }
+    }
+    velocity.x = speed * cos(angleToMove);
+    velocity.z = speed * sin(angleToMove);
+}
+
 void Player::tick()
 {
-    location.x += speed;
+    location.x += velocity.x;
+    lookingAt.x += velocity.x;
+    location.y += velocity.y;
+    lookingAt.y += velocity.y;
+    location.z += velocity.z;
+    lookingAt.z += velocity.z;
 }

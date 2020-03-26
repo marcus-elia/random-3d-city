@@ -11,6 +11,7 @@ private:
     Vector3 up;
 
     double speed;
+    Vector3 velocity;
 public:
     Player();
     Player(Vector3 inputLocation, Vector3 inputLookingAt, Vector3 inputUp, double inputSpeed);
@@ -26,6 +27,7 @@ public:
     void setLookingAt(Vector3 inputLookingAt);
     void setUp(Vector3 inputUp);
     void setSpeed(double inputSpeed);
+    void setVelocity(bool wKey, bool aKey, bool sKey, bool dKey, bool rKey, bool cKey);
 
     // Movement
     void tick();
