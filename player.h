@@ -17,7 +17,7 @@ private:
     double sensitivity; // turning speed for mouse movement
 
     int chunkSize;
-    Point2D currentChunk; // which chunk the player is in
+    Point2D currentChunkCoords; // which chunk the player is in
 public:
     Player();
     Player(Vector3 inputLocation, Vector3 inputLookingAt, Vector3 inputUp, double inputSpeed, int inputChunkSize);
@@ -27,7 +27,7 @@ public:
     Vector3 getLookingAt() const;
     Vector3 getUp() const;
     double getSpeed() const;
-    Point2D getCurrentChunk() const;
+    Point2D getCurrentChunkCoords() const;
     int getCurrentChunkInt() const;
 
     // Setters
@@ -35,7 +35,7 @@ public:
     void setLookingAt(Vector3 inputLookingAt);
     void setUp(Vector3 inputUp);
     void setSpeed(double inputSpeed);
-    void setCurrentChunk(Point2D input);
+    void setCurrentChunkCoords(Point2D input);
 
     // Movement
 
