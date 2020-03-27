@@ -8,6 +8,7 @@ Player::Player()
     up = {0, 1, 0};
     speed = 2;
     velocity = {0,0,0};
+    sensitivity = 0.01;
 }
 Player::Player(Vector3 inputLocation, Vector3 inputLookingAt, Vector3 inputUp, double inputSpeed)
 {
@@ -16,6 +17,7 @@ Player::Player(Vector3 inputLocation, Vector3 inputLookingAt, Vector3 inputUp, d
     up = inputUp;
     speed = inputSpeed;
     velocity = {0,0,0};
+    sensitivity = 0.01;
 }
 
 // Getters
