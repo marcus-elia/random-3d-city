@@ -2,6 +2,7 @@
 #define RANDOM_3D_CITY_PLAYER_H
 
 #include "graphics.h"
+#include "chunk.h"
 
 class Player
 {
@@ -14,21 +15,29 @@ private:
     Vector3 velocity; // current x y and z velocity
 
     double sensitivity; // turning speed for mouse movement
+
+    int chunkSize;
+    Point2D currentChunk; // which chunk the player is in
 public:
     Player();
-    Player(Vector3 inputLocation, Vector3 inputLookingAt, Vector3 inputUp, double inputSpeed);
+    Player(Vector3 inputLocation, Vector3 inputLookingAt, Vector3 inputUp, double inputSpeed, int inputChunkSize);
 
     // Getters
     Vector3 getLocation() const;
     Vector3 getLookingAt() const;
     Vector3 getUp() const;
     double getSpeed() const;
+    Point2D getCurrentChunk() const;
+    int getCurrentChunkInt() const;
 
     // Setters
     void setLocation(Vector3 inputLocation);
     void setLookingAt(Vector3 inputLookingAt);
     void setUp(Vector3 inputUp);
     void setSpeed(double inputSpeed);
+    void setCurrentChunk(Point2D input);
+
+    // Movement
 
     // Based on which keys are pressed, set the velocity
     void setVelocity(bool wKey, bool aKey, bool sKey, bool dKey, bool rKey, bool cKey);
@@ -43,7 +52,11 @@ public:
     void updateLookingAt(double theta);
 
 
-    // Movement
+    // Chunks
+
+    // Returns the Point2D of the chunk underneath where the player is
+    Point2D whatChunk() const;
+
     void tick();
 };
 

@@ -9,8 +9,10 @@ Player::Player()
     speed = 2;
     velocity = {0,0,0};
     sensitivity = 0.01;
+    chunkSize = 1024;
+    currentChunk = whatChunk();
 }
-Player::Player(Vector3 inputLocation, Vector3 inputLookingAt, Vector3 inputUp, double inputSpeed)
+Player::Player(Vector3 inputLocation, Vector3 inputLookingAt, Vector3 inputUp, double inputSpeed, int inputChunkSize)
 {
     location = inputLocation;
     lookingAt = inputLookingAt;
@@ -18,6 +20,8 @@ Player::Player(Vector3 inputLocation, Vector3 inputLookingAt, Vector3 inputUp, d
     speed = inputSpeed;
     velocity = {0,0,0};
     sensitivity = 0.01;
+    chunkSize = inputChunkSize;
+    currentChunk = whatChunk();
 }
 
 // Getters
@@ -37,6 +41,14 @@ double Player::getSpeed() const
 {
     return speed;
 }
+Point2D Player::getCurrentChunk() const
+{
+    return currentChunk;
+}
+int Player::getCurrentChunkInt() const
+{
+    return pointToInt(currentChunk);
+}
 
 // Setters
 void Player::setLocation(Vector3 inputLocation)
@@ -54,6 +66,10 @@ void Player::setUp(Vector3 inputUp)
 void Player::setSpeed(double inputSpeed)
 {
     speed = inputSpeed;
+}
+void Player::setCurrentChunk(Point2D input)
+{
+    currentChunk = input;
 }
 
 
@@ -207,4 +223,9 @@ void Player::tick()
     lookingAt.y += velocity.y;
     location.z += velocity.z;
     lookingAt.z += velocity.z;
+}
+
+Point2D Player::whatChunk() const
+{
+    return {chunkSize*(int)floor(location.x / chunkSize), chunkSize*(int)floor(location.y / chunkSize)};
 }
