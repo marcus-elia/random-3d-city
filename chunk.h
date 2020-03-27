@@ -24,9 +24,9 @@ struct Point2D
 class Chunk
 {
 private:
-    Point2D bottomLeft;
+    Point2D bottomLeft; // The bottom left coordinate divided by sideLength
     int sideLength;
-    Point2D center;
+    Point2D center;   // The actual center
 
     // The number of the chunk based on its location
     int chunkID;
@@ -44,7 +44,10 @@ private:
     void draw() const;
 
     // Wrapper function, returns chunks around this
-    std::vector<int> getChunksAround(int radius);
+    std::vector<Point2D> getChunksAround(int radius);
+
+    // Divides by size and converts resulting ordered pair to int
+    int chunkToInt() const;
 
 };
 
@@ -55,5 +58,6 @@ int pointToInt(Point2D p);
 // Returns the ints corresponding to to all chunks that are within radius of this one,
 // using the taxicab metric
 std::vector<int> getChunksAroundPoint(Point2D p, int radius);
+std::vector<Point2D> getChunksAroundPointByPoint(Point2D p, int radius);
 
 #endif //RANDOM_3D_CITY_CHUNK_H

@@ -15,7 +15,7 @@ Chunk::Chunk(Point2D inputBottomLeft, int inputSideLength)
 
 void Chunk::initializeCenter()
 {
-    center = {bottomLeft.x + sideLength/2, bottomLeft.z - sideLength/2};
+    center = {sideLength*bottomLeft.x + sideLength/2, sideLength*bottomLeft.z - sideLength/2};
 }
 
 // Getters
@@ -36,21 +36,21 @@ void Chunk::draw() const
 {
     glBegin(GL_QUADS);
     glColor4f(1, 1, 0.3, 1);
-    glVertex2f(bottomLeft.x, bottomLeft.z);
-    glVertex2f(bottomLeft.x + sideLength, bottomLeft.z);
-    glVertex2f(bottomLeft.x + sideLength, bottomLeft.z + sideLength);
-    glVertex2f(bottomLeft.x, bottomLeft.z + sideLength);
+    glVertex2f(sideLength*bottomLeft.x, sideLength*bottomLeft.z);
+    glVertex2f(sideLength*bottomLeft.x + sideLength, sideLength*bottomLeft.z);
+    glVertex2f(sideLength*bottomLeft.x + sideLength, sideLength*bottomLeft.z + sideLength);
+    glVertex2f(sideLength*bottomLeft.x, sideLength*bottomLeft.z + sideLength);
     glEnd();
 }
 
 int Chunk::chunkToInt() const
 {
-    return pointToInt({bottomLeft.x / sideLength, bottomLeft.z / sideLength});
+    return pointToInt({bottomLeft.x, bottomLeft.z});
 }
 
-std::vector<int> Chunk::getChunksAround(int radius)
+std::vector<Point2D> Chunk::getChunksAround(int radius)
 {
-    return getChunksAroundPoint(bottomLeft, radius);
+    return getChunksAroundPointByPoint(bottomLeft, radius);
 }
 
 int pointToInt(Point2D p)
@@ -87,6 +87,21 @@ std::vector<int> getChunksAroundPoint(Point2D p, int radius)
         for(int a = p.x - (radius - distanceFromZ); a <= p.x + (radius - distanceFromZ); a++)
         {
             result.push_back(pointToInt({a,b}));
+        }
+    }
+    return result;
+}
+std::vector<Point2D> getChunksAroundPointByPoint(Point2D p, int radius)
+{
+    std::vector<Point2D> result;
+
+    // Start at the top of the diamond and work down from there
+    for(int b = p.z + radius; b >= p.z - radius; b--)
+    {
+        int distanceFromZ = abs(b - p.z);
+        for(int a = p.x - (radius - distanceFromZ); a <= p.x + (radius - distanceFromZ); a++)
+        {
+            result.push_back({a,b});
         }
     }
     return result;
