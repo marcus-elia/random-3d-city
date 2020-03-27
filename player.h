@@ -36,6 +36,9 @@ public:
     // Rotates lookingAt around location in the xz plane
     void rotateLookingAtHorizontal(double theta);
 
+    // Rotates lookingAt around location vertically
+    void rotateLookingAtVertical(double theta);
+
     // Based on the angle of mouse movement, change the lookingat
     void updateLookingAt(double theta);
 

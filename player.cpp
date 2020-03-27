@@ -138,15 +138,13 @@ void Player::setVelocity(bool wKey, bool aKey, bool sKey, bool dKey, bool rKey, 
 
 void Player::rotateLookingAtHorizontal(double theta)
 {
-    double prevX, prevZ;
-
     // Translate to the origin
     lookingAt.x -= location.x;
     lookingAt.z -= location.z;
 
     // Rotate around y-axis
-    prevX = lookingAt.x;
-    prevZ = lookingAt.z;
+    double prevX = lookingAt.x;
+    double prevZ = lookingAt.z;
     lookingAt.x = prevX * cos(theta) - prevZ * sin(theta);
     lookingAt.z = prevX * sin(theta) + prevZ * cos(theta);
 
@@ -155,12 +153,39 @@ void Player::rotateLookingAtHorizontal(double theta)
     lookingAt.z += location.z;
 }
 
+void Player::rotateLookingAtVertical(double theta)
+{
+    // Rotate around the y axis to get on the +x axis
+    double xzAngle = atan2(lookingAt.z - location.z, lookingAt.x - location.x);
+    rotateLookingAtHorizontal(2*PI - xzAngle);
+
+    // Translate to origin
+    lookingAt.x -= location.x;
+    lookingAt.y -= location.y;
+
+    // Rotate around y-axis
+    double prevX = lookingAt.x;
+    double prevY = lookingAt.y;
+    lookingAt.x = prevX * cos(theta) - prevY * sin(theta);
+    lookingAt.y = prevX * sin(theta) + prevY * cos(theta);
+
+    // Translate back
+    lookingAt.x += location.x;
+    lookingAt.y += location.y;
+
+    // Unrotate horizontally
+    rotateLookingAtHorizontal(xzAngle);
+}
 
 void Player::updateLookingAt(double theta)
 {
     // Horizontal turning
     double horizontalAmount = sensitivity * cos(theta);
     rotateLookingAtHorizontal(horizontalAmount);
+
+    // Vertical turning
+    double verticalAmount = sensitivity * sin(theta);
+    rotateLookingAtVertical(-verticalAmount); // negative sign since we are rotating up from +x axis
 }
 
 void Player::tick()
