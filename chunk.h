@@ -35,12 +35,17 @@ private:
 
     void draw() const;
 
-    // Chunk things
+    // Wrapper function, returns chunks around this
     std::vector<int> getChunksAround(int radius);
+
 };
 
 // Returns the result of mapping a 2d point in Z x Z into the
 // non-negative integers, by spiraling clockwise.
 int pointToInt(Point2D p);
+
+// Returns the ints corresponding to to all chunks that are within radius of this one,
+// using the taxicab metric
+std::vector<int> getChunksAroundPoint(Point2D p, int radius);
 
 #endif //RANDOM_3D_CITY_CHUNK_H

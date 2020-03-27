@@ -43,6 +43,11 @@ void Chunk::draw() const
     glEnd();
 }
 
+std::vector<int> Chunk::getChunksAround(int radius)
+{
+    return getChunksAroundPoint(bottomLeft, radius);
+}
+
 int pointToInt(Point2D p)
 {
     int a = p.x;
@@ -64,5 +69,20 @@ int pointToInt(Point2D p)
         return 4*b*b + 3*b + a;
     }
     return 3; // idk why, but (0,-1) -> 3 is the only special case
+}
 
+std::vector<int> getChunksAroundPoint(Point2D p, int radius)
+{
+    std::vector<int> result;
+
+    // Start at the top of the diamond and work down from there
+    for(int b = p.z + radius; b >= p.z - radius; b--)
+    {
+        int distanceFromZ = abs(b - p.z);
+        for(int a = p.x - (radius - distanceFromZ); a <= p.x + (radius - distanceFromZ); a++)
+        {
+            result.push_back(pointToInt({a,b}));
+        }
+    }
+    return result;
 }
