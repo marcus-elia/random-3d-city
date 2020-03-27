@@ -3,10 +3,12 @@
 #include "chunk.h"
 
 void testPointToInt();
+void testGetChunksAroundPoint();
 
 int main()
 {
     testPointToInt();
+    testGetChunksAroundPoint();
     return 0;
 }
 
@@ -58,6 +60,51 @@ void testPointToInt()
             std::cout << "Expected " << expected[i] << ", observed " << observed << std::endl;
         }
     }
+    if(passed)
+    {
+        std::cout << "All tests passed." << std::endl;
+    }
+}
+
+void testGetChunksAroundPoint()
+{
+    std::cout << std::endl << "Testing GetChunksAroundPoint()" << std::endl;
+
+    bool passed = true;
+
+    Point2D p;
+    int radius;
+    std::vector<int> expected;
+    std::vector<int> observed;
+
+    p = {0,0};
+    radius = 0;
+    expected = std::vector<int>({0});
+    observed = getChunksAroundPoint(p, radius);
+    if(expected != observed)
+    {
+        passed = false;
+        std::cout << "Test FAILED for p = " << p.x << "," << p.z << " and r = " << radius << std::endl;
+    }
+    p = {0,0};
+    radius = 1;
+    expected = std::vector<int>({7,5,0,1,3});
+    observed = getChunksAroundPoint(p, radius);
+    if(expected != observed)
+    {
+        passed = false;
+        std::cout << "Test FAILED for p = " << p.x << "," << p.z << " and r = " << radius << std::endl;
+    }
+    p = {0,0};
+    radius = 2;
+    expected = std::vector<int>({22,6,7,8,18,5,0,1,10,4,3,2,14});
+    observed = getChunksAroundPoint(p, radius);
+    if(expected != observed)
+    {
+        passed = false;
+        std::cout << "Test FAILED for p = " << p.x << "," << p.z << " and r = " << radius << std::endl;
+    }
+
     if(passed)
     {
         std::cout << "All tests passed." << std::endl;
