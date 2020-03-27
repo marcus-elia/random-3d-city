@@ -134,6 +134,33 @@ void Player::setVelocity(bool wKey, bool aKey, bool sKey, bool dKey, bool rKey, 
     velocity.z = speed * sin(angleToMove);
 }
 
+void Player::rotateLookingAtHorizontal(double theta)
+{
+    double prevX, prevZ;
+
+    // Translate to the origin
+    lookingAt.x -= location.x;
+    lookingAt.z -= location.z;
+
+    // Rotate around y-axis
+    prevX = lookingAt.x;
+    prevZ = lookingAt.z;
+    lookingAt.x = prevX * cos(theta) - prevZ * sin(theta);
+    lookingAt.z = prevX * sin(theta) + prevZ * cos(theta);
+
+    // Translate back
+    lookingAt.x += location.x;
+    lookingAt.z += location.z;
+}
+
+
+void Player::updateLookingAt(double theta)
+{
+    // Horizontal turning
+    double horizontalAmount = sensitivity * cos(theta);
+    rotateLookingAtHorizontal(horizontalAmount);
+}
+
 void Player::tick()
 {
     location.x += velocity.x;
