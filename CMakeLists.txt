@@ -27,10 +27,12 @@ file(GLOB SOURCE_FILES
         )
 
 add_executable(graphics ${SOURCE_FILES})
-add_executable(testing ${SOURCE_FILES})
+add_executable(testing testing.cpp chunk.h chunk.cpp)
 
 if (WIN32)
     target_link_libraries (graphics ${OPENGL_LIBRARIES} freeglut)
+    target_link_libraries (testing ${OPENGL_LIBRARIES} freeglut)
 elseif (APPLE)
     target_link_libraries (graphics ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES})
+    target_link_libraries (testing ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES})
 endif ()
