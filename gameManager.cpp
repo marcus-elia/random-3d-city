@@ -24,6 +24,12 @@ void GameManager::draw() const
 void GameManager::tick()
 {
     player.tick();
+
+    if(player.whatChunk() != player.getCurrentChunk())
+    {
+        std::cout << pointToInt({player.whatChunk().x/1024, player.whatChunk().z/1024}) << std::endl;
+        player.setCurrentChunk(player.whatChunk());
+    }
 }
 
 Player GameManager::getPlayer() const

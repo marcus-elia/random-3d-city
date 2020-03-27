@@ -5,6 +5,7 @@
 #include <memory>
 #include "recPrism.h"
 #include "player.h"
+#include <iostream>
 
 class GameManager
 {
