@@ -227,5 +227,5 @@ void Player::tick()
 
 Point2D Player::whatChunk() const
 {
-    return {chunkSize*(int)floor(location.x / chunkSize), chunkSize*(int)floor(location.y / chunkSize)};
+    return {chunkSize*(int)floor(location.x / chunkSize), chunkSize*(int)floor(location.z / chunkSize)};
 }
