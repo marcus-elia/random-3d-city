@@ -30,7 +30,7 @@ private:
 
     // The number of the chunk based on its location
     int chunkID;
-private:
+public:
     Chunk();
     Chunk(Point2D inputBottomLeft, int inputSideLength);
 
