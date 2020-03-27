@@ -45,6 +45,9 @@ public:
     void setRKey(bool input);
     void setCKey(bool input);
 
+    // Chunks
+    void updateCurrentChunks();
+
     // Camera
     Vector3 getCameraLocation() const;
     Vector3 getCameraLookingAt() const;
