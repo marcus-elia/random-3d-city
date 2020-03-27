@@ -6,6 +6,7 @@
 #include "recPrism.h"
 #include "player.h"
 #include <iostream>
+#include <unordered_map>
 
 class GameManager
 {
@@ -16,8 +17,15 @@ private:
     bool wKey, aKey, sKey, dKey, rKey, cKey;
 
     std::vector<std::unique_ptr<Solid>> solids;
+
+    // Chunks
+    int chunkSize;
+    int renderRadius;
+    std::unordered_map<int, std::shared_ptr<Chunk>> allSeenChunks;
+    std::vector<std::shared_ptr<Chunk>> currentChunks;
 public:
     GameManager();
+    GameManager(int inputChunkSize, int inputRenderRadius);
 
     // Getters
     Player getPlayer() const;

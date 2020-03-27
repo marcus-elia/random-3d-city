@@ -5,7 +5,11 @@ GameManager::GameManager()
     solids.push_back(std::unique_ptr<RecPrism>(new RecPrism({0, 50, 0}, {0.2,0,1,1},
             30,100, 30, {1,1,1,1})));
 }
-
+GameManager::GameManager(int inputChunkSize, int inputRenderRadius)
+{
+    chunkSize = inputChunkSize;
+    renderRadius = inputRenderRadius;
+}
 
 void GameManager::reactToMouseMovement(double theta)
 {
@@ -19,16 +23,36 @@ void GameManager::draw() const
     {
         s->draw();
     }
+    for(auto &c : currentChunks)
+    {
+        c->draw();
+    }
 }
 
 void GameManager::tick()
 {
     player.tick();
 
-    if(player.whatChunk() != player.getCurrentChunk())
+    // If the player is entering a different chunk
+    Point2D curPlayerChunk = player.whatChunk();
+    if(curPlayerChunk != player.getCurrentChunkCoords())
     {
-        std::cout << pointToInt({player.whatChunk().x/1024, player.whatChunk().z/1024}) << std::endl;
-        player.setCurrentChunk(player.whatChunk());
+        std::cout << pointToInt({player.whatChunk().x/256, player.whatChunk().z/256}) << std::endl;
+        // Update the player's current chunk
+        player.setCurrentChunkCoords(player.whatChunk());
+
+        // Update the list of current chunks
+        currentChunks = std::vector<std::shared_ptr<Chunk>>();
+        std::vector<Point2D> chunksInRadius = getChunksAroundPointByPoint(player.getCurrentChunkCoords(), renderRadius);
+        for(Point2D p : chunksInRadius)
+        {
+            int index = pointToInt(p);
+            if(!allSeenChunks.count(index) == 0) // if the chunk has never been seen before
+            {
+                allSeenChunks[index] = std::make_shared<Chunk>(p, chunkSize);
+            }
+            currentChunks.push_back(allSeenChunks[index]);
+        }
     }
 }
 
