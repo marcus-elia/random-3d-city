@@ -59,10 +59,10 @@ int pointToInt(Point2D p)
     {
         return 4*a*a - a + b;
     }
-    else if(b > 0 && a >= -b && a < b+1)
+    else if(b > -1 && a >= -b && a < b+1)
     {
         return 4*b*b + 3*b + a;
     }
-    return 0;
+    return 3; // idk why, but (0,-1) -> 3 is the only special case
 
 }
