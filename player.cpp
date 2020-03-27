@@ -163,6 +163,17 @@ void Player::rotateLookingAtVertical(double theta)
     lookingAt.x -= location.x;
     lookingAt.y -= location.y;
 
+    // Clip the angle between -Pi and Pi
+    double curAngle = atan2(lookingAt.y, lookingAt.x);
+    if(curAngle + theta > PI)
+    {
+        theta = PI - curAngle;
+    }
+    else if(curAngle + theta < -PI)
+    {
+        theta = -PI - curAngle;
+    }
+
     // Rotate around y-axis
     double prevX = lookingAt.x;
     double prevY = lookingAt.y;
