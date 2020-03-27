@@ -8,7 +8,7 @@ Player::Player()
     up = {0, 1, 0};
     speed = 2;
     velocity = {0,0,0};
-    sensitivity = 0.01;
+    sensitivity = 0.02;
     chunkSize = 256;
     currentChunkCoords = whatChunk();
 }
@@ -227,5 +227,5 @@ void Player::tick()
 
 Point2D Player::whatChunk() const
 {
-    return {chunkSize*(int)floor(location.x / chunkSize), chunkSize*(int)floor(location.z / chunkSize)};
+    return {(int)floor(location.x / chunkSize), (int)floor(location.z / chunkSize)};
 }
