@@ -43,6 +43,11 @@ void Chunk::draw() const
     glEnd();
 }
 
+int Chunk::chunkToInt() const
+{
+    return pointToInt({bottomLeft.x / sideLength, bottomLeft.z / sideLength});
+}
+
 std::vector<int> Chunk::getChunksAround(int radius)
 {
     return getChunksAroundPoint(bottomLeft, radius);
