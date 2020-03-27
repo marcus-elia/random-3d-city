@@ -41,6 +41,9 @@ public:
     Vector3 getCameraLookingAt() const;
     Vector3 getCameraUp() const;
 
+    // Mouse
+    void reactToMouseMovement(double theta);
+
     void draw() const;
     void tick();
 };

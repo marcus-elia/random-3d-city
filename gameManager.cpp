@@ -6,6 +6,13 @@ GameManager::GameManager()
             30,100, 30, {1,1,1,1})));
 }
 
+
+void GameManager::reactToMouseMovement(double theta)
+{
+    player.updateLookingAt(theta);
+}
+
+
 void GameManager::draw() const
 {
     for(auto &s : solids)

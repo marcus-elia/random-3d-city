@@ -4,11 +4,15 @@
 GLdouble width, height;
 int wd;
 GameManager manager;
+// Mouse variables
+int prevMouseX, prevMouseY;
 
 void init()
 {
     width = 500;
     height = 500;
+    prevMouseX = 0;
+    prevMouseY = 0;
 }
 
 /* Initialize OpenGL Graphics */
@@ -152,7 +156,10 @@ void kbdS(int key, int x, int y)
 
 void cursor(int x, int y)
 {
-
+    double theta = atan2(y - prevMouseY, x - prevMouseX);
+    manager.reactToMouseMovement(theta);
+    prevMouseX = x;
+    prevMouseY = y;
     glutPostRedisplay();
 }
 
