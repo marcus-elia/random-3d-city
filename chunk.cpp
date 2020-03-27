@@ -35,11 +35,19 @@ Point2D Chunk::getCenter() const
 void Chunk::draw() const
 {
     glBegin(GL_QUADS);
-    glColor4f(1, 1, 0.3, 1);
-    glVertex2f(sideLength*bottomLeft.x, sideLength*bottomLeft.z);
-    glVertex2f(sideLength*bottomLeft.x + sideLength, sideLength*bottomLeft.z);
-    glVertex2f(sideLength*bottomLeft.x + sideLength, sideLength*bottomLeft.z + sideLength);
-    glVertex2f(sideLength*bottomLeft.x, sideLength*bottomLeft.z + sideLength);
+    if((bottomLeft.x + bottomLeft.z) % 2 == 0)
+    {
+        glColor4f(1, 1, 0.3, 1);
+    }
+    else
+    {
+        glColor4f(0, 1, 0.8, 1);
+    }
+    glVertex3f(sideLength*bottomLeft.x,0, sideLength*bottomLeft.z);
+    glVertex3f(sideLength*bottomLeft.x,0, sideLength*bottomLeft.z + sideLength);
+    glVertex3f(sideLength*bottomLeft.x + sideLength,0, sideLength*bottomLeft.z + sideLength);
+    glVertex3f(sideLength*bottomLeft.x + sideLength,0, sideLength*bottomLeft.z);
+
     glEnd();
 }
 
