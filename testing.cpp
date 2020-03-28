@@ -47,6 +47,18 @@ void testPointToInt()
     expected.push_back(11);
     values.push_back({2,-2});
     expected.push_back(12);
+    values.push_back({1,-2});
+    expected.push_back(13);
+    values.push_back({0,-2});
+    expected.push_back(14);
+    values.push_back({-1,-2});
+    expected.push_back(15);
+    values.push_back({-2,-2});
+    expected.push_back(16);
+    values.push_back({-2,-1});
+    expected.push_back(17);
+    values.push_back({-2,-3});
+    expected.push_back(35);
     values.push_back({4,3});
     expected.push_back(49);
 
@@ -98,6 +110,15 @@ void testGetChunksAroundPoint()
     p = {0,0};
     radius = 2;
     expected = std::vector<int>({22,6,7,8,18,5,0,1,10,4,3,2,14});
+    observed = getChunksAroundPoint(p, radius);
+    if(expected != observed)
+    {
+        passed = false;
+        std::cout << "Test FAILED for p = " << p.x << "," << p.z << " and r = " << radius << std::endl;
+    }
+    p = {-1,-1};
+    radius = 1;
+    expected = std::vector<int>({5,17,4,3,15});
     observed = getChunksAroundPoint(p, radius);
     if(expected != observed)
     {

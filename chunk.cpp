@@ -73,7 +73,7 @@ int pointToInt(Point2D p)
     {
         return 4*b*b + b - a;
     }
-    else if(a < 0 && b >= a-1 && b < -a)
+    else if(a < 0 && b > a-1 && b < -a)
     {
         return 4*a*a - a + b;
     }
@@ -81,7 +81,7 @@ int pointToInt(Point2D p)
     {
         return 4*b*b + 3*b + a;
     }
-    return 3; // idk why, but (0,-1) -> 3 is the only special case
+    return (2*a-1)*(2*a-3); // idk why, but this works for (0,-1) and (-1,-2)
 }
 
 std::vector<int> getChunksAroundPoint(Point2D p, int radius)
