@@ -3,7 +3,7 @@
 
 Player::Player()
 {
-    location = {80, 30, 60.0};
+    location = {0, 30, 60.0};
     lookingAt = {0,30,0};
     up = {0, 1, 0};
     speed = 2;
