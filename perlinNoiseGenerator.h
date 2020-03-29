@@ -30,6 +30,9 @@ public:
     std::vector<std::vector<double>> calculatePerlinNoise2D(int width, int height,
             std::vector<std::vector<double>> seed, int numOctaves);
 
+    // Linearly scales the perlin noise so that the smallest in the 2d array becomes minvalue
+    // and the highest becomes maxvalue
+    void scaleNoise(double minValue, double maxValue);
 
     std::vector<std::vector<double>> getPerlinNoise();
 };

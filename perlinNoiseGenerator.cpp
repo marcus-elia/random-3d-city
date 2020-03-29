@@ -101,6 +101,41 @@ std::vector<std::vector<double>> PerlinNoiseGenerator::calculatePerlinNoise2D(in
     return output;
 }
 
+void PerlinNoiseGenerator::scaleNoise(double minValue, double maxValue)
+{
+    double a = 1;
+    double b = 0;
+
+    // Iterate through to find smallest and largest
+    for(std::vector<double> &vec : perlinNoise)
+    {
+        for(double d : vec)
+        {
+            if(d < a)
+            {
+                a = d;
+            }
+            if(d > b)
+            {
+                b = d;
+            }
+        }
+    }
+    // In the rare case of division by zero, don't do anything
+    if(a == b)
+    {
+        return;
+    }
+
+    // Iterate through again, and scale each value
+    for(std::vector<double> &vec : perlinNoise)
+    {
+        for(int i = 0; i < vec.size(); i++)
+        {
+            vec[i] = (vec[i] - a) / (b - a);
+        }
+    }
+}
 
 std::vector<std::vector<double>> PerlinNoiseGenerator::getPerlinNoise()
 {
