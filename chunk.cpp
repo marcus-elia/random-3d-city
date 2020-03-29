@@ -4,12 +4,14 @@ Chunk::Chunk()
 {
     bottomLeft = {0,0};
     sideLength = 1024;
+    perlinSeed = 0.5;
     initializeCenter();
 }
-Chunk::Chunk(Point2D inputBottomLeft, int inputSideLength)
+Chunk::Chunk(Point2D inputBottomLeft, int inputSideLength,  double inputPerlinSeed)
 {
     bottomLeft = inputBottomLeft;
     sideLength = inputSideLength;
+    perlinSeed = inputPerlinSeed;
     initializeCenter();
 }
 
@@ -35,14 +37,15 @@ Point2D Chunk::getCenter() const
 void Chunk::draw() const
 {
     glBegin(GL_QUADS);
-    if((bottomLeft.x + bottomLeft.z) % 2 == 0)
+    /*if((bottomLeft.x + bottomLeft.z) % 2 == 0)
     {
         glColor4f(1, 1, 0.3, 1);
     }
     else
     {
         glColor4f(0, 1, 0.8, 1);
-    }
+    }*/
+    glColor4f(perlinSeed, 0, 1, 1);
     glVertex3f(sideLength*bottomLeft.x,0, sideLength*bottomLeft.z);
     glVertex3f(sideLength*bottomLeft.x,0, sideLength*bottomLeft.z + sideLength);
     glVertex3f(sideLength*bottomLeft.x + sideLength,0, sideLength*bottomLeft.z + sideLength);

@@ -30,9 +30,12 @@ private:
 
     // The number of the chunk based on its location
     int chunkID;
+
+    // The value of the Perlin noise map for this chunk
+    double perlinSeed;
 public:
     Chunk();
-    Chunk(Point2D inputBottomLeft, int inputSideLength);
+    Chunk(Point2D inputBottomLeft, int inputSideLength, double inputPerlinSeed);
 
     void initializeCenter();
 
