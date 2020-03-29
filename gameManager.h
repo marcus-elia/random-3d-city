@@ -3,10 +3,11 @@
 
 #include <vector>
 #include <memory>
-#include "recPrism.h"
-#include "player.h"
 #include <iostream>
 #include <unordered_map>
+#include "recPrism.h"
+#include "player.h"
+#include "perlinNoiseGenerator.h"
 
 class GameManager
 {
@@ -23,9 +24,11 @@ private:
     int renderRadius;
     std::unordered_map<int, std::shared_ptr<Chunk>> allSeenChunks;
     std::vector<std::shared_ptr<Chunk>> currentChunks;
+    int perlinSize;  // how many chunks before perlin repeats
+    PerlinNoiseGenerator png;
 public:
     GameManager();
-    GameManager(int inputChunkSize, int inputRenderRadius);
+    GameManager(int inputChunkSize, int inputRenderRadius, int inputPerlinSize);
 
     // Getters
     Player getPlayer() const;
@@ -46,6 +49,7 @@ public:
     void setCKey(bool input);
 
     // Chunks
+    double getPerlinValue(Point2D p); // the value of the Perlin noise map at that point
     void updateCurrentChunks();
 
     // Camera

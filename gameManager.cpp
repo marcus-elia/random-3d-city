@@ -2,16 +2,20 @@
 
 GameManager::GameManager()
 {
+    perlinSize = 10;
+    png = PerlinNoiseGenerator(10, 10, 1);
     chunkSize = 256;
-    renderRadius = 3;
+    renderRadius = 2;
     solids.push_back(std::unique_ptr<RecPrism>(new RecPrism({0, 50, 0}, {0.2,0,1,1},
             30,100, 30, {1,1,1,1})));
     updateCurrentChunks();
 }
-GameManager::GameManager(int inputChunkSize, int inputRenderRadius)
+GameManager::GameManager(int inputChunkSize, int inputRenderRadius, int inputPerlinSize)
 {
     chunkSize = inputChunkSize;
     renderRadius = inputRenderRadius;
+    perlinSize = inputPerlinSize;
+    png = PerlinNoiseGenerator(perlinSize, perlinSize, 1);
     updateCurrentChunks();
 }
 
@@ -31,6 +35,17 @@ void GameManager::draw() const
     {
         c->draw();
     }
+
+    // Make current chunk red for debug
+    /*Point2D p = player.getCurrentChunkCoords();
+    glBegin(GL_QUADS);
+    glColor4f(1,0,0,1);
+    glVertex3f(chunkSize*p.x,1, chunkSize*p.z);
+    glVertex3f(chunkSize*p.x,1, chunkSize*p.z + chunkSize);
+    glVertex3f(chunkSize*p.x + chunkSize,1, chunkSize*p.z + chunkSize);
+    glVertex3f(chunkSize*p.x + chunkSize,1, chunkSize*p.z);
+
+    glEnd();*/
 }
 
 void GameManager::tick()
@@ -41,7 +56,8 @@ void GameManager::tick()
     Point2D curPlayerChunk = player.whatChunk();
     if(curPlayerChunk != player.getCurrentChunkCoords())
     {
-        std::cout << pointToInt({player.whatChunk().x/256, player.whatChunk().z/256}) << std::endl;
+        std::cout << pointToInt({player.whatChunk().x, player.whatChunk().z}) << std::endl;
+        std::cout << player.getLocation().x << ", " << player.getLocation().z << std::endl;
         updateCurrentChunks();
     }
 }
@@ -110,6 +126,16 @@ void GameManager::setCKey(bool input)
     player.setVelocity(wKey, aKey, sKey, dKey, rKey, cKey);
 }
 
+// ============================
+//
+//       Managing Chunks
+//
+// ============================
+double GameManager::getPerlinValue(Point2D p)
+{
+    return png.getPerlinNoise()[p.x][p.z];
+}
+
 void GameManager::updateCurrentChunks()
 {
     player.setCurrentChunkCoords(player.whatChunk());
@@ -122,7 +148,7 @@ void GameManager::updateCurrentChunks()
         int index = pointToInt(p);
         if(allSeenChunks.count(index) == 0) // if the chunk has never been seen before
         {
-            allSeenChunks[index] = std::make_shared<Chunk>(p, chunkSize);
+            allSeenChunks[index] = std::make_shared<Chunk>(p, chunkSize, getPerlinValue(p));
         }
         currentChunks.push_back(allSeenChunks[index]);
     }
