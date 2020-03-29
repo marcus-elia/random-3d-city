@@ -8,6 +8,7 @@ PerlinNoiseGenerator::PerlinNoiseGenerator()
     fillNoiseSeed();
     perlinNoise = calculatePerlinNoise2D(width, height, noiseSeed,
                                               (int)floor(log(width)));
+    scaleNoise(0,1);
 }
 PerlinNoiseGenerator::PerlinNoiseGenerator(int inputWidth, int inputHeight, double inputBias)
 {
@@ -21,6 +22,7 @@ PerlinNoiseGenerator::PerlinNoiseGenerator(int inputWidth, int inputHeight, doub
     fillNoiseSeed();
     perlinNoise = calculatePerlinNoise2D(width, height, noiseSeed,
                                          (int)floor(log(width)));
+    scaleNoise(0,1);
 }
 
 void PerlinNoiseGenerator::fillNoiseSeed()
