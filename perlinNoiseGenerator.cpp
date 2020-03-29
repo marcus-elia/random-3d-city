@@ -28,6 +28,7 @@ void PerlinNoiseGenerator::fillNoiseSeed()
     srand(time(NULL));
     for(int i = 0; i < width; i++)
     {
+        noiseSeed.emplace_back(std::vector<double>());
         for(int j = 0; j < height; j++)
             noiseSeed[i].push_back((double)(rand() % 100) / 100);
     }
@@ -67,6 +68,7 @@ std::vector<std::vector<double>> PerlinNoiseGenerator::calculatePerlinNoise2D(in
     std::vector<std::vector<double>> output;
     for(int i = 0; i < w; i++)
     {
+        output.emplace_back(std::vector<double>());
         for(int j = 0; j < h; j++)
         {
             double noise = 0;
