@@ -133,7 +133,7 @@ void GameManager::setCKey(bool input)
 // ============================
 double GameManager::getPerlinValue(Point2D p)
 {
-    return png.getPerlinNoise()[p.x % perlinSize][p.z % perlinSize];
+    return png.getPerlinNoise()[mod(p.x, perlinSize)][mod(p.z, perlinSize)];
 }
 
 void GameManager::updateCurrentChunks()
@@ -169,4 +169,14 @@ Vector3 GameManager::getCameraLookingAt() const
 Vector3 GameManager::getCameraUp() const
 {
     return player.getUp();
+}
+
+int mod(int a, int m)
+{
+    int x = a % m;
+    if(x < 0)
+    {
+        return x + m;
+    }
+    return x;
 }

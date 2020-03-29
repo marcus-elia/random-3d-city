@@ -63,4 +63,8 @@ public:
     void draw() const;
     void tick();
 };
+
+// Since % can return negatives
+int mod(int a, int m);
+
 #endif //RANDOM_3D_CITY_GAMEMANAGER_H
