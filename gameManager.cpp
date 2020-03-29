@@ -133,7 +133,7 @@ void GameManager::setCKey(bool input)
 // ============================
 double GameManager::getPerlinValue(Point2D p)
 {
-    return png.getPerlinNoise()[p.x][p.z];
+    return png.getPerlinNoise()[p.x % perlinSize][p.z % perlinSize];
 }
 
 void GameManager::updateCurrentChunks()
