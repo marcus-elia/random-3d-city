@@ -1,14 +1,17 @@
 #include <iostream>
 #include <cmath>
 #include "chunk.h"
+#include "perlinNoiseGenerator.h"
 
 void testPointToInt();
 void testGetChunksAroundPoint();
+void testPerlinNoiseGenerator();
 
 int main()
 {
     testPointToInt();
     testGetChunksAroundPoint();
+    testPerlinNoiseGenerator();
     return 0;
 }
 
@@ -129,5 +132,20 @@ void testGetChunksAroundPoint()
     if(passed)
     {
         std::cout << "All tests passed." << std::endl;
+    }
+}
+
+void testPerlinNoiseGenerator()
+{
+    std::cout << std::endl << "Testing PerlinNoiseGenerator()" << std::endl;
+    PerlinNoiseGenerator png = PerlinNoiseGenerator(10, 10, 1);
+    std::vector<std::vector<double>> noise = png.getPerlinNoise();
+    for(std::vector<double> vec : noise)
+    {
+        for(double d : vec)
+        {
+            std::cout << d << ", ";
+        }
+        std::cout << std::endl;
     }
 }
