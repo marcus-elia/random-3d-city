@@ -2,7 +2,10 @@
 #define RANDOM_3D_CITY_CHUNK_H
 
 #include "graphics.h"
+#include "building.h"
 #include <vector>
+#include <stdlib.h>
+#include <time.h>
 
 // int points used for the chunks
 // in the xz plane
@@ -33,16 +36,21 @@ private:
 
     // The value of the Perlin noise map for this chunk
     double perlinSeed;
+
+    int propertySize; // = side length of square assigned to each building
+    std::vector<Building> buildings;
 public:
     Chunk();
     Chunk(Point2D inputBottomLeft, int inputSideLength, double inputPerlinSeed);
 
     void initializeCenter();
+    void makeBuildings();
 
     // Getters
     Point2D getBottomLeft() const;
     int getSideLength() const;
     Point2D getCenter() const;
+    std::vector<Building> getBuildings() const;
 
     void draw() const;
 

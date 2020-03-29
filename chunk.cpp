@@ -6,6 +6,8 @@ Chunk::Chunk()
     sideLength = 1024;
     perlinSeed = 0.5;
     initializeCenter();
+    propertySize = sideLength / 8;
+    makeBuildings();
 }
 Chunk::Chunk(Point2D inputBottomLeft, int inputSideLength,  double inputPerlinSeed)
 {
@@ -13,11 +15,34 @@ Chunk::Chunk(Point2D inputBottomLeft, int inputSideLength,  double inputPerlinSe
     sideLength = inputSideLength;
     perlinSeed = inputPerlinSeed;
     initializeCenter();
+    propertySize = sideLength / 8;
+    makeBuildings();
 }
 
 void Chunk::initializeCenter()
 {
     center = {sideLength*bottomLeft.x + sideLength/2, sideLength*bottomLeft.z - sideLength/2};
+}
+void Chunk::makeBuildings()
+{
+    srand(time(NULL));
+    for(int i = 0; i < sideLength / propertySize; i++)
+    {
+        for(int j = 0; j < sideLength / propertySize; j++)
+        {
+            double r1 = (double)(rand() % 100) / 100;
+            double r2 = (double)(rand() % 100) / 100;
+
+            // Make a building if r says yes, more likely when perlin noise is high
+            if(r1 < perlinSeed && r2 > 0.8)
+            {
+                Point2D topLeft = {bottomLeft.x*sideLength + i*propertySize,
+                                   (bottomLeft.z + 1)*sideLength - j*propertySize};
+                buildings.push_back(Building(topLeft, propertySize, (int)(perlinSeed*100 + r1*50 + r2*50),
+                        {r1, 0, perlinSeed, 1}, {1,1,1,1}));
+            }
+        }
+    }
 }
 
 // Getters
@@ -32,6 +57,10 @@ int Chunk::getSideLength() const
 Point2D Chunk::getCenter() const
 {
     return center;
+}
+std::vector<Building> Chunk::getBuildings() const
+{
+    return buildings;
 }
 
 void Chunk::draw() const
@@ -52,6 +81,11 @@ void Chunk::draw() const
     glVertex3f(sideLength*bottomLeft.x + sideLength,0, sideLength*bottomLeft.z);
 
     glEnd();
+
+    for(const Building &b : buildings)
+    {
+        b.draw();
+    }
 }
 
 int Chunk::chunkToInt() const
