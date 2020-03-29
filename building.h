@@ -2,13 +2,15 @@
 #define RANDOM_3D_CITY_BUILDING_H
 
 #include "solid.h"
+#include "recPrism.h"
 #include "chunk.h"
 #include <vector>
+#include <memory>
 
 class Building
 {
 protected:
-    std::vector<Solid> solids;
+    std::vector<std::shared_ptr<Solid>> solids;
 
     // The rectangular base of the building's property
     Point2D topLeft;
@@ -23,7 +25,7 @@ public:
     Building(Point2D inputTopLeft, int inputSideLength, int inputHeight,
             RGBAcolor inputColor, RGBAcolor inputEdgeColor);
 
-    std::vector<Solid> getSolids() const;
+    std::vector<std::shared_ptr<Solid>> getSolids() const;
 
     void draw() const;
 };
