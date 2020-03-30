@@ -36,9 +36,9 @@ void Chunk::makeBuildings()
             // Make a building if r says yes, more likely when perlin noise is high
             if(r1 < perlinSeed && r2 > 0.8)
             {
-                Point2D topLeft = {bottomLeft.x*sideLength + i*propertySize,
+                Point2D topLeftOfBuilding = {bottomLeft.x*sideLength + i*propertySize,
                                    (bottomLeft.z + 1)*sideLength - j*propertySize};
-                buildings.push_back(Building(topLeft, propertySize, (int)(perlinSeed*100 + r1*50 + r2*50),
+                buildings.push_back(Building(topLeftOfBuilding, propertySize, (int)(perlinSeed*100 + r1*50 + r2*50),
                         {r1, 0, perlinSeed, 1}, {1,1,1,1}));
             }
         }
