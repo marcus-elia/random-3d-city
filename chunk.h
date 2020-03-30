@@ -1,27 +1,16 @@
 #ifndef RANDOM_3D_CITY_CHUNK_H
 #define RANDOM_3D_CITY_CHUNK_H
 
+
+
+
 #include "graphics.h"
 #include "building.h"
 #include <vector>
 #include <stdlib.h>
 #include <time.h>
 
-// int points used for the chunks
-// in the xz plane
-struct Point2D
-{
-    int x;
-    int z;
-    bool operator ==(const Point2D& p1)
-    {
-        return x == p1.x && z == p1.z;
-    }
-    bool operator !=(const Point2D& p1)
-    {
-        return x != p1.x || z != p1.z;
-    }
-};
+
 
 
 class Chunk

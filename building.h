@@ -3,9 +3,25 @@
 
 #include "solid.h"
 #include "recPrism.h"
-#include "chunk.h"
+//#include "chunk.h"
 #include <vector>
 #include <memory>
+
+// int points used for the chunks
+// in the xz plane
+struct Point2D
+{
+    int x;
+    int z;
+    bool operator ==(const Point2D& p1)
+    {
+        return x == p1.x && z == p1.z;
+    }
+    bool operator !=(const Point2D& p1)
+    {
+        return x != p1.x || z != p1.z;
+    }
+};
 
 class Building
 {
@@ -29,5 +45,7 @@ public:
 
     void draw() const;
 };
+
+
 
 #endif //RANDOM_3D_CITY_BUILDING_H
