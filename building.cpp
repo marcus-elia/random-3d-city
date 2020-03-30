@@ -21,6 +21,9 @@ Building::Building(Point2D inputTopLeft, int inputSideLength, int inputHeight,
     height = inputHeight;
     color = inputColor;
     edgeColor = inputEdgeColor;
+    Point center = {(double)topLeft.x, (double)height/2, (double)topLeft.z};
+    solids.push_back(std::make_shared<RecPrism>(RecPrism(center, color,
+                                                         sideLength, height, sideLength, edgeColor)));
 }
 
 std::vector<std::shared_ptr<Solid>> Building::getSolids() const
