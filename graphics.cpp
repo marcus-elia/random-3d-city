@@ -11,8 +11,8 @@ void init()
 {
     width = 800;
     height = 500;
-    prevMouseX = 0;
-    prevMouseY = 0;
+    prevMouseX = width/2;
+    prevMouseY = height/2;
 }
 
 /* Initialize OpenGL Graphics */
@@ -160,6 +160,12 @@ void cursor(int x, int y)
     manager.reactToMouseMovement(theta);
     prevMouseX = x;
     prevMouseY = y;
+
+    // if the cursor gets close to the edge, put it back in the middle
+    if(x < 50 || x > width - 50 || y < 50 || y > height - 50)
+    {
+        glutWarpPointer(width/2,height/2);
+    }
     glutPostRedisplay();
 }
 
@@ -173,7 +179,6 @@ void mouse(int button, int state, int x, int y)
 
 void timer(int dummy)
 {
-
     glutPostRedisplay();
     glutTimerFunc(30, timer, dummy);
     manager.tick();
@@ -199,6 +204,9 @@ int main(int argc, char** argv)
 
     // Our own OpenGL initialization
     initGL();
+
+    // Make the cursor invisible
+    glutSetCursor(GLUT_CURSOR_NONE);
 
     // register keyboard press event processing function
     // works for numbers, letters, spacebar, etc.
