@@ -223,6 +223,11 @@ void Player::tick()
     lookingAt.y += velocity.y;
     location.z += velocity.z;
     lookingAt.z += velocity.z;
+    if(location.y < 5)
+    {
+        lookingAt.y += 5 - location.y;
+        location.y = 5;
+    }
 }
 
 Point2D Player::whatChunk() const
