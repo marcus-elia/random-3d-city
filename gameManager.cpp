@@ -22,6 +22,7 @@ GameManager::GameManager(int inputChunkSize, int inputRenderRadius, int inputPer
 void GameManager::reactToMouseMovement(double theta)
 {
     player.updateLookingAt(theta);
+    player.setVelocity(wKey, aKey, sKey, dKey, rKey, cKey);
 }
 
 
@@ -56,8 +57,8 @@ void GameManager::tick()
     Point2D curPlayerChunk = player.whatChunk();
     if(curPlayerChunk != player.getCurrentChunkCoords())
     {
-        std::cout << pointToInt({player.whatChunk().x, player.whatChunk().z}) << std::endl;
-        std::cout << player.getLocation().x << ", " << player.getLocation().z << std::endl;
+        //std::cout << pointToInt({player.whatChunk().x, player.whatChunk().z}) << std::endl;
+        //std::cout << player.getLocation().x << ", " << player.getLocation().z << std::endl;
         updateCurrentChunks();
     }
 }
