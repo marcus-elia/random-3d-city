@@ -58,7 +58,7 @@ void display()
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     //glOrtho(-width/2, width/2, -height/2, height/2, -width, width);
-    gluPerspective(45, width/height, 1, 2000);
+    gluPerspective(45, width/height, 1, 4096);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);   // Clear the color buffer with current clearing color
 
     glEnable(GL_DEPTH);
