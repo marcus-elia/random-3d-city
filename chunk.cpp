@@ -44,17 +44,17 @@ void Chunk::makeBuildings()
                 if(perlinSeed < 0.25 || (perlinSeed < 0.5 && r1 < 0.1))
                 {
                     buildingType = House;
-                    height = 15;
+                    height = propertySize/2;
                 }
                 else if(r1 > 0.9)
                 {
                     buildingType = Skyscraper;
-                    height =  (int)(perlinSeed*120 + r1*60 + r2*60);
+                    height =  (int)(perlinSeed*180 + r1*80 + r2*80);
                 }
                 else
                 {
                     buildingType = Plain;
-                    height =  (int)(perlinSeed*120 + r1*60 + r2*60);
+                    height =  (int)(perlinSeed*180 + r1*80 + r2*80);
                 }
                 buildings.push_back(Building(topLeftOfBuilding, propertySize, height,
                         {r1, 0, perlinSeed, 1}, {1,1,1,1}, buildingType));
