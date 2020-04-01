@@ -58,6 +58,10 @@ public:
     Point2D whatChunk() const;
 
     void tick();
+
+    // Check every Building in the given Chunk to see if we are hitting it,
+    // and move according to what the Building says if we are
+    void checkCollisionsAndCorrect(Chunk &c, int buffer);
 };
 
 #endif //RANDOM_3D_CITY_PLAYER_H

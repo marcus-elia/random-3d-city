@@ -234,3 +234,18 @@ Point2D Player::whatChunk() const
 {
     return {(int)floor(location.x / chunkSize), (int)floor(location.z / chunkSize)};
 }
+
+void Player::checkCollisionsAndCorrect(Chunk &c, int buffer)
+{
+    std::experimental::optional<Point> newPoint = c.correctCollision({location.x, location.y, location.z}, buffer);
+    if(newPoint)
+    {
+        Point p = newPoint.value();
+        lookingAt.x += p.x - location.x;
+        lookingAt.y += p.y - location.y;
+        lookingAt.z += p.z - location.z;
+        location.x = p.x;
+        location.y = p.y;
+        location.z = p.z;
+    }
+}
