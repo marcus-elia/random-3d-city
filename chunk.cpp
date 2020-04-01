@@ -38,8 +38,26 @@ void Chunk::makeBuildings()
             {
                 Point2D topLeftOfBuilding = {bottomLeft.x*sideLength + i*propertySize,
                                    (bottomLeft.z + 1)*sideLength - j*propertySize};
-                buildings.push_back(Building(topLeftOfBuilding, propertySize, (int)(perlinSeed*100 + r1*50 + r2*50),
-                        {r1, 0, perlinSeed, 1}, {1,1,1,1}));
+                // What type of building is it? How high is it?
+                typeOfBuilding buildingType;
+                int height;
+                if(perlinSeed < 0.25 || (perlinSeed < 0.5 && r1 < 0.1))
+                {
+                    buildingType = House;
+                    height = 15;
+                }
+                else if(r1 > 0.9)
+                {
+                    buildingType = Skyscraper;
+                    height =  (int)(perlinSeed*120 + r1*60 + r2*60);
+                }
+                else
+                {
+                    buildingType = Plain;
+                    height =  (int)(perlinSeed*120 + r1*60 + r2*60);
+                }
+                buildings.push_back(Building(topLeftOfBuilding, propertySize, height,
+                        {r1, 0, perlinSeed, 1}, {1,1,1,1}, buildingType));
             }
         }
     }
