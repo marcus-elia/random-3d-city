@@ -5,11 +5,12 @@
 #include "recPrism.h"
 #include "triPrism.h"
 #include "frustum.h"
+#include "cylinder.h"
 //#include "chunk.h"
 #include <vector>
 #include <memory>
 
-enum typeOfBuilding {Plain, House, Skyscraper, Empire};
+enum typeOfBuilding {Plain, House, Skyscraper, Empire, UFO};
 
 // int points used for the chunks
 // in the xz plane
