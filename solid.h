@@ -43,4 +43,7 @@ public:
     virtual std::experimental::optional<Point> correctCollision(Point p, int buffer);
 };
 
+// Returns the distance in the xz plane
+double distance2d(Point p1, Point p2);
+
 #endif //RANDOM_3D_CITY_SOLID_H
