@@ -40,7 +40,7 @@ public:
 
     // If the p is within buffer of this shape, a corrected position
     // is returned. returns nullopt otherwise.
-    virtual std::experimental::optional<Point> correctCollision(Point p, int buffer);
+    virtual std::experimental::optional<Point> correctCollision(Point p, int buffer)=0;
 };
 
 // Returns the distance in the xz plane
