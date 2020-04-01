@@ -9,26 +9,49 @@ Building::Building()
     color = {0,0.4,1,1};
     edgeColor = {.9,.9,.9, 1};
 
-    Point center = {(double)topLeft.x, (double)height/2, (double)topLeft.z};
-    solids.push_back(std::make_shared<RecPrism>(RecPrism(center, color,
-            sideLength, height, sideLength, edgeColor)));
+    buildingType = Plain;
+
+    initializeSolids();
 }
 Building::Building(Point2D inputTopLeft, int inputSideLength, int inputHeight,
-        RGBAcolor inputColor, RGBAcolor inputEdgeColor)
+        RGBAcolor inputColor, RGBAcolor inputEdgeColor, typeOfBuilding inputBuildingType)
 {
     topLeft = inputTopLeft;
     sideLength = inputSideLength;
     height = inputHeight;
     color = inputColor;
     edgeColor = inputEdgeColor;
-    Point center = {(double)topLeft.x + sideLength/2, (double)height/2, (double)topLeft.z + sideLength/2};
-    solids.push_back(std::make_shared<RecPrism>(RecPrism(center, color,
-                                                         sideLength, height, sideLength, edgeColor)));
+    buildingType = inputBuildingType;
+
+    initializeSolids();
+
+}
+
+void Building::initializeSolids()
+{
+    if(buildingType == Plain)
+    {
+        Point center = {(double)topLeft.x + sideLength/2, (double)height/2, (double)topLeft.z + sideLength/2};
+        solids.push_back(std::make_shared<RecPrism>(RecPrism(center, color,
+                                                             sideLength, height, sideLength, edgeColor)));
+    }
+    else if(buildingType == House)
+    {
+        Point center = {(double)topLeft.x + sideLength/2, (double)height/2, (double)topLeft.z + sideLength/2};
+        solids.push_back(std::make_shared<RecPrism>(RecPrism(center, color,
+                                                             sideLength, height, sideLength, edgeColor)));
+        solids.push_back(std::make_shared<TriPrism>(TriPrism(center, color,
+                                                             sideLength, height/2, sideLength, edgeColor)));
+    }
 }
 
 std::vector<std::shared_ptr<Solid>> Building::getSolids() const
 {
     return solids;
+}
+typeOfBuilding Building::getBuildingType() const
+{
+    return buildingType;
 }
 
 void Building::draw() const

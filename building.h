@@ -3,9 +3,12 @@
 
 #include "solid.h"
 #include "recPrism.h"
+#include "triPrism.h"
 //#include "chunk.h"
 #include <vector>
 #include <memory>
+
+enum typeOfBuilding {Plain, House, Skyscraper};
 
 // int points used for the chunks
 // in the xz plane
@@ -36,12 +39,18 @@ protected:
     RGBAcolor color;
     RGBAcolor edgeColor;
 
+    typeOfBuilding buildingType;
+
 public:
     Building();
     Building(Point2D inputTopLeft, int inputSideLength, int inputHeight,
-            RGBAcolor inputColor, RGBAcolor inputEdgeColor);
+            RGBAcolor inputColor, RGBAcolor inputEdgeColor, typeOfBuilding inputBuildingType);
 
+    void initializeSolids();
+
+    // Getters
     std::vector<std::shared_ptr<Solid>> getSolids() const;
+    typeOfBuilding getBuildingType() const;
 
     void draw() const;
 };
