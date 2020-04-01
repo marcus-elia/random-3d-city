@@ -50,6 +50,27 @@ void Building::initializeSolids()
         solids.push_back(std::make_shared<RecPrism>(RecPrism(center, color,
                                                              sideLength, 3*height/2, sideLength, edgeColor)));
     }
+    else if(buildingType == Empire)
+    {
+        Point center = {(double)topLeft.x + sideLength/2, (double)height/2, (double)topLeft.z + sideLength/2};
+        solids.push_back(std::make_shared<RecPrism>(RecPrism(center, color,
+                                                             sideLength, height, sideLength, edgeColor)));
+        center = {center.x, center.y + height/2.0 + height/12.0, center.z};
+        solids.push_back(std::make_shared<Frustum>(Frustum(center, color,
+                                                             sideLength, height/6.0, sideLength, edgeColor,
+                                                             2*sideLength/3, 2*sideLength/3)));
+        center = {center.x, center.y + height/2.0 + height/6.0 + height/8.0, center.z};
+        solids.push_back(std::make_shared<RecPrism>(RecPrism(center, color,
+                                                             2*sideLength/3, height/4.0,
+                                                             2*sideLength/3, edgeColor)));
+        center = {center.x, center.y + height/2.0 + height/6.0 + height/4.0 + height/12.0, center.z};
+        solids.push_back(std::make_shared<Frustum>(Frustum(center, color,
+                                                           sideLength, height/6.0, sideLength, edgeColor,
+                                                           sideLength/3, sideLength/3)));
+        center = {center.x, center.y + height/2.0 + height/6.0 + height/4.0 + height/6.0 + height/4.0, center.z};
+        solids.push_back(std::make_shared<RecPrism>(RecPrism(center, color,
+                                                             5, height/2.0, 5, edgeColor)));
+    }
 }
 
 std::vector<std::shared_ptr<Solid>> Building::getSolids() const
