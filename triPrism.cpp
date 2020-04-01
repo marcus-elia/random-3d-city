@@ -114,3 +114,62 @@ void TriPrism::drawFaces() const
 
     glEnd();
 }
+
+std::experimental::optional<Point> TriPrism::correctCollision(Point p, int buffer)
+{
+    // If not on the property
+    if(p.x < center.x - xWidth/2 - buffer || p.x > center.x + xWidth/2 + buffer ||
+          p.z < center.z - zWidth/2 - buffer || p.z > center.z + zWidth/2 + buffer ||
+          p.y > center.y + yWidth/2 + buffer || p.y < center.y - yWidth/2 - buffer)
+    {
+        return std::experimental::nullopt;
+    }
+    if(p.x <= center.x) // Left half
+    {
+        double A = 2*yWidth/xWidth;
+        double B = -1;
+        double C = center.y - yWidth/2 - 2*center.x*yWidth/xWidth;
+        if(abs(directedDistance(A,B,C,p.x,p.y)) < buffer)
+        {
+            double m = 2*yWidth/xWidth; // slope of the left side of the triangle in xy plane
+            double b1 = center.y - yWidth/2 - 2*center.x*yWidth/xWidth;  // y-intercept
+            double b2 = p.y + xWidth*p.x / (2*yWidth);   // y-intercept of perpendicular line through p
+
+            // Where the perpendicular through p intersects the triangle's side
+            double intersectionX = (b2 - b1) / (m + 1/m);
+            double intersectionY = m*intersectionX + b1;
+
+            double theta = atan(-1/m); // the angle of the perpendicular
+
+            // How far to move from the intersection point
+            double deltaX = buffer*cos(theta);
+            double deltaY = buffer*sin(theta);
+            return std::experimental::optional<Point>({intersectionX + deltaX, intersectionY + deltaY, p.z});
+        }
+    }
+    else // Right half
+    {
+        double A = -2*yWidth/xWidth;
+        double B = -1;
+        double C = center.y - yWidth/2 + 2*center.x*yWidth/xWidth;
+        if(abs(directedDistance(A,B,C,p.x,p.y)) < buffer)
+        {
+            double m = -2*yWidth/xWidth; // slope of the right side of the triangle in xy plane
+            double b1 = center.y - yWidth/2 + 2*center.x*yWidth/xWidth;  // y-intercept
+            double b2 = p.y - xWidth/(2*yWidth)*p.x;  // y-intercept of perpendicular line through p
+
+            // Where the perpendicular through p intersects the triangle's side
+            double intersectionX = (b2 - b1) / (m + 1/m);
+            double intersectionY = m*intersectionX + b1;
+
+            double theta = atan(-1/m); // the angle of the perpendicular
+
+            // How far to move from the intersection point
+            double deltaX = buffer*cos(theta);
+            double deltaY = buffer*sin(theta);
+            return std::experimental::optional<Point>({intersectionX + deltaX, intersectionY + deltaY, p.z});
+        }
+    }
+    // Otherwise, assume it's near the base of the prism
+    return std::experimental::optional<Point>({p.x, center.y - yWidth/2 - buffer, p.z});
+}
