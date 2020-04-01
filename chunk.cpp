@@ -179,3 +179,16 @@ std::vector<Point2D> getChunksAroundPointByPoint(Point2D p, int radius)
     }
     return result;
 }
+
+std::experimental::optional<Point> Chunk::correctCollision(Point p, int buffer)
+{
+    for(Building& b : buildings)
+    {
+        std::experimental::optional<Point> newPoint = b.correctCollision(p, buffer);
+        if(newPoint)
+        {
+            return newPoint;
+        }
+    }
+    return std::experimental::nullopt;
+}

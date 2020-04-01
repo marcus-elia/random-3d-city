@@ -49,6 +49,12 @@ public:
     // Divides by size and converts resulting ordered pair to int
     int chunkToInt() const;
 
+
+    // Calls correctCollision() on every Building in this chunk. Returns nullopt
+    // if the point is not with buffer of a building, and returns a corrected Point
+    // if otherwise.
+    std::experimental::optional<Point> correctCollision(Point p, int buffer);
+
 };
 
 // Returns the result of mapping a 2d point in Z x Z into the
@@ -59,5 +65,6 @@ int pointToInt(Point2D p);
 // using the taxicab metric
 std::vector<int> getChunksAroundPoint(Point2D p, int radius);
 std::vector<Point2D> getChunksAroundPointByPoint(Point2D p, int radius);
+
 
 #endif //RANDOM_3D_CITY_CHUNK_H
