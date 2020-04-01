@@ -125,3 +125,43 @@ void RecPrism::drawFaces() const
     drawPoint(corners[7]);
     glEnd();
 }
+
+std::experimental::optional<Point> RecPrism::correctCollision(Point p, int buffer)
+{
+    // If it is ouside the prism, just return nullopt
+    if(p.x < center.x - xWidth/2 - buffer || p.x > center.x + xWidth/2 + buffer ||
+       p.z < center.z - zWidth/2 - buffer || p.z > center.z + zWidth/2 + buffer ||
+       p.y > center.y + yWidth/2 + buffer)
+    {
+        return std::experimental::nullopt;
+    }
+    // If we're close to the left side
+    if(abs(p.x - center.x + xWidth/2) < buffer)
+    {
+        return std::experimental::optional<Point>({center.x - xWidth/2 - buffer, p.y, p.z});
+    }
+    // Right side
+    else if(abs(p.x - center.x - xWidth/2) < buffer)
+    {
+        return std::experimental::optional<Point>({center.x + xWidth/2 + buffer, p.y, p.z});
+    }
+    // Back side
+    else if(abs(p.z - center.z + zWidth/2) < buffer)
+    {
+        return std::experimental::optional<Point>({p.x, p.y, center.z - zWidth/2 - buffer});
+    }
+    // Front side
+    else if(abs(p.z - center.z - zWidth/2) < buffer)
+    {
+        return std::experimental::optional<Point>({p.x, p.y, center.z + zWidth/2 + buffer});
+    }
+    // Assume bottom or top
+    else if(abs(p.y - center.y + yWidth/2) < buffer)
+    {
+        return std::experimental::optional<Point>({p.x, center.y - yWidth/2 - buffer, p.z});
+    }
+    else
+    {
+        return std::experimental::optional<Point>({p.x, center.y + yWidth/2 + buffer, p.z});
+    }
+}
