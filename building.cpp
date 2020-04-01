@@ -59,15 +59,15 @@ void Building::initializeSolids()
         solids.push_back(std::make_shared<Frustum>(Frustum(center, color,
                                                              sideLength, height/6.0, sideLength, edgeColor,
                                                              2*sideLength/3, 2*sideLength/3)));
-        center = {center.x, center.y + height/2.0 + height/6.0 + height/8.0, center.z};
+        center = {center.x, center.y + height/12.0 + height/8.0, center.z};
         solids.push_back(std::make_shared<RecPrism>(RecPrism(center, color,
                                                              2*sideLength/3, height/4.0,
                                                              2*sideLength/3, edgeColor)));
-        center = {center.x, center.y + height/2.0 + height/6.0 + height/4.0 + height/12.0, center.z};
+        center = {center.x, center.y + height/8.0 + height/12.0, center.z};
         solids.push_back(std::make_shared<Frustum>(Frustum(center, color,
-                                                           sideLength, height/6.0, sideLength, edgeColor,
+                                                           2*sideLength/3, height/6.0, 2*sideLength/3, edgeColor,
                                                            sideLength/3, sideLength/3)));
-        center = {center.x, center.y + height/2.0 + height/6.0 + height/4.0 + height/6.0 + height/4.0, center.z};
+        center = {center.x, center.y + height/12.0 + height/4.0, center.z};
         solids.push_back(std::make_shared<RecPrism>(RecPrism(center, color,
                                                              5, height/2.0, 5, edgeColor)));
     }
