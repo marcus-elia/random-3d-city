@@ -5,6 +5,7 @@
 
 #include "drawableObject.h"
 #include <vector>
+#include <experimental/optional>
 
 class Solid : public DrawableObject
 {
@@ -36,6 +37,10 @@ public:
     void setYWidth(double inputYWidth);
     void setZWidth(double inputZWidth);
     void setLineColor(RGBAcolor inputLineColor);
+
+    // If the p is within buffer of this shape, a corrected position
+    // is returned. returns nullopt otherwise.
+    virtual std::experimental::optional<Point> correctCollision(Point p, int buffer);
 };
 
 #endif //RANDOM_3D_CITY_SOLID_H
