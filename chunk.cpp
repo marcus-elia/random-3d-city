@@ -37,7 +37,7 @@ void Chunk::makeBuildings()
             if(r1 < perlinSeed && r2 > 0.8)
             {
                 Point2D topLeftOfBuilding = {bottomLeft.x*sideLength + i*propertySize,
-                                   (bottomLeft.z + 1)*sideLength - j*propertySize};
+                                   (bottomLeft.z + 1)*sideLength - (j+1)*propertySize};
                 // What type of building is it? How high is it?
                 typeOfBuilding buildingType;
                 int height;
