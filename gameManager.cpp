@@ -4,7 +4,7 @@ GameManager::GameManager()
 {
     perlinSize = 10;
     png = PerlinNoiseGenerator(10, 10, 1);
-    chunkSize = 256;
+    chunkSize = 512;
     renderRadius = 3;
     solids.push_back(std::unique_ptr<RecPrism>(new RecPrism({0, 50, 0}, {0.2,0,1,1},
             30,100, 30, {1,1,1,1})));
