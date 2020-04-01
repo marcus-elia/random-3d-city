@@ -105,3 +105,16 @@ void Building::draw() const
         s->draw();
     }
 }
+
+std::experimental::optional<Point> Building::correctCollision(Point p, int buffer)
+{
+    for(std::shared_ptr<Solid> s : solids)
+    {
+        std::experimental::optional<Point> newPoint = s->correctCollision(p, buffer);
+        if(newPoint)
+        {
+            return newPoint;
+        }
+    }
+    return std::experimental::nullopt;
+}
