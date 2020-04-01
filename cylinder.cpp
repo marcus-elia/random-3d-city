@@ -114,3 +114,28 @@ void Cylinder::drawFaces() const
 
     glEnable(GL_CULL_FACE);
 }
+
+std::experimental::optional<Point> Cylinder::correctCollision(Point p, int buffer)
+{
+    if(distance2d(p, center) >= xWidth + buffer || p.y < center.y - yWidth/2 - buffer ||
+    p.y > center.y + yWidth/2 + buffer)
+    {
+        return std::experimental::nullopt;
+    }
+    // If it's near the top
+    if(abs(p.y - center.y - yWidth/2) < buffer)
+    {
+        return std::experimental::optional<Point>({p.x, center.y + yWidth/2 + buffer, p.z});
+    }
+    // Bottom
+    else if(abs(p.y - center.y + yWidth/2) < buffer)
+    {
+        return std::experimental::optional<Point>({p.x, center.y - yWidth/2 - buffer, p.z});
+    }
+    else // Move out of the circle
+    {
+        double theta = atan2(p.z - center.z, p.x - center.x);
+        return std::experimental::optional<Point>({center.x + (xWidth/2 + buffer)*cos(theta), p.y,
+                                                   center.z + (zWidth/2 + buffer)*sin(theta)});
+    }
+}

@@ -6,6 +6,7 @@
 
 
 // Creates an elliptical cylinder whose bases are parallel to the xz plane
+// NOTE: in order for collision to work, must be a circular ellipse
 
 class Cylinder : public Solid, public MovableObject
 {
@@ -27,6 +28,8 @@ public:
     void draw() const;
     void drawLines() const;
     void drawFaces() const;
+
+    std::experimental::optional<Point> correctCollision(Point p, int buffer);
 };
 
 #endif //RANDOM_3D_CITY_CYLINDER_H
