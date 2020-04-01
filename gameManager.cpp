@@ -51,10 +51,15 @@ void GameManager::draw() const
 
 void GameManager::tick()
 {
+    // The player moves
     player.tick();
 
-    // If the player is entering a different chunk
+    // Check for the player hitting a building
     Point2D curPlayerChunk = player.whatChunk();
+    std::shared_ptr<Chunk> c = allSeenChunks[pointToInt(curPlayerChunk)];
+    player.checkCollisionsAndCorrect(*c, 5);
+
+    // If the player is entering a different chunk
     if(curPlayerChunk != player.getCurrentChunkCoords())
     {
         //std::cout << pointToInt({player.whatChunk().x, player.whatChunk().z}) << std::endl;
