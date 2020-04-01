@@ -52,7 +52,7 @@ void Cylinder::drawLines() const
 {
     glColor4f(lineColor.r, lineColor.g, lineColor.b, lineColor.a);
     glBegin(GL_LINES);
-    for(int i = 0; i < 2*smoothness - 4; i += 2)
+    for(int i = 0; i < 2*smoothness - 3; i += 2)
     {
         // Upper face
         drawPoint(corners[i]);
@@ -73,10 +73,35 @@ void Cylinder::drawLines() const
 
 void Cylinder::drawFaces() const
 {
+    glColor4f(color.r, color.g, color.b, color.a);
     glDisable(GL_CULL_FACE);
 
+    // Draw the top and bottom circles
+    glBegin(GL_TRIANGLE_FAN);
+    // center
+    drawPoint({center.x, center.y + yWidth/2, center.z});
+    // top circumference
+    for(int i = 0; i < smoothness; i++)
+    {
+        drawPoint(corners[2*i]);
+    }
+    drawPoint(corners[0]);
+    glEnd();
+
+    glBegin(GL_TRIANGLE_FAN);
+    // center
+    drawPoint({center.x, center.y - yWidth/2, center.z});
+    // bottom circumference
+    for(int i = 0; i < smoothness; i++)
+    {
+        drawPoint(corners[2*i + 1]);
+    }
+    drawPoint(corners[1]);
+    glEnd();
+
+    // Draw the cylinder part
+
     glBegin(GL_TRIANGLE_STRIP);
-    glColor4f(color.r, color.g, color.b, color.a);
 
     for(int i = 0; i < 2*smoothness; i++)
     {
@@ -84,6 +109,7 @@ void Cylinder::drawFaces() const
     }
     // Connect the end to the start
     drawPoint(corners[0]);
+    drawPoint(corners[1]);
     glEnd();
 
     glEnable(GL_CULL_FACE);
