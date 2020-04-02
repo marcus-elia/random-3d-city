@@ -19,12 +19,11 @@ struct Point
     double x;
     double y;
     double z;
-
-    std::ostream& operator<<(std::ostream& os)
-    {
-        os << "(" << x << "," << y << "," << z << ")";
-    }
 };
+std::ostream& operator<<(std::ostream& os, Point p)
+{
+    os << "(" << p.x << "," << p.y << "," << p.z << ")";
+}
 
 class DrawableObject
 {
