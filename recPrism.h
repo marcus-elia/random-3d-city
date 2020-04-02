@@ -26,4 +26,7 @@ public:
     std::experimental::optional<Point> correctCollision(Point p, int buffer);
 };
 
+std::experimental::optional<Point> correctRectangularPrismCollision(Point p, int buffer, Point c,
+        double xw, double yw, double zw);
+
 #endif //RANDOM_3D_CITY_RECPRISM_H

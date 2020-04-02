@@ -126,42 +126,58 @@ void RecPrism::drawFaces() const
     glEnd();
 }
 
+// Wrapper function
 std::experimental::optional<Point> RecPrism::correctCollision(Point p, int buffer)
 {
+    correctRectangularPrismCollision(p, buffer, center,
+            xWidth, yWidth, zWidth);
+}
+
+// Static
+std::experimental::optional<Point> correctRectangularPrismCollision(Point p, int buffer, Point c,
+                                                                    double xw, double yw, double zw)
+{
     // If it is ouside the prism, just return nullopt
-    if(p.x < center.x - xWidth/2 - buffer || p.x > center.x + xWidth/2 + buffer ||
-       p.z < center.z - zWidth/2 - buffer || p.z > center.z + zWidth/2 + buffer ||
-       p.y > center.y + yWidth/2 + buffer)
+    if(p.x < c.x - xw/2 - buffer || p.x > c.x + xw/2 + buffer ||
+       p.z < c.z - zw/2 - buffer || p.z > c.z + zw/2 + buffer ||
+       p.y > c.y + yw/2 + buffer || p.y < c.y - yw/2 - buffer)
     {
         return std::experimental::nullopt;
     }
-    // If we're close to the left side
-    if(abs(p.x - center.x + xWidth/2) < buffer)
+    // Get the distance from each face
+    double left = abs(p.x - c.x + xw/2);
+    double right = abs(p.x - c.x - xw/2);
+    double up = abs(p.y - c.y - yw/2);
+    double down = abs(p.y - c.y + yw/2);
+    double front = abs(p.z - c.z - zw/2);
+    double back = abs(p.z - c.z + zw/2);
+    // If we're closest to the left side
+    if(left <= right && left < up && left < down && left < front && left < back)
     {
-        return std::experimental::optional<Point>({center.x - xWidth/2 - buffer, p.y, p.z});
+        return std::experimental::optional<Point>({c.x - xw/2 - buffer, p.y, p.z});
     }
-    // Right side
-    else if(abs(p.x - center.x - xWidth/2) < buffer)
+        // Right side
+    else if(right <= up && right < down && right < front && right < back)
     {
-        return std::experimental::optional<Point>({center.x + xWidth/2 + buffer, p.y, p.z});
+        return std::experimental::optional<Point>({c.x + xw/2 + buffer, p.y, p.z});
     }
-    // Back side
-    else if(abs(p.z - center.z + zWidth/2) < buffer)
+        // Up
+    else if(up <= down && up < front && up < back)
     {
-        return std::experimental::optional<Point>({p.x, p.y, center.z - zWidth/2 - buffer});
+        return std::experimental::optional<Point>({p.x, c.y + yw/2 + buffer, p.z});
     }
-    // Front side
-    else if(abs(p.z - center.z - zWidth/2) < buffer)
+        // Down
+    else if(down <= front && down < back)
     {
-        return std::experimental::optional<Point>({p.x, p.y, center.z + zWidth/2 + buffer});
+        return std::experimental::optional<Point>({p.x, c.y - yw/2 - buffer, p.z});
     }
-    // Assume bottom or top
-    else if(abs(p.y - center.y + yWidth/2) < buffer)
+        // Back side
+    else if(back < front)
     {
-        return std::experimental::optional<Point>({p.x, center.y - yWidth/2 - buffer, p.z});
+        return std::experimental::optional<Point>({p.x, p.y, c.z - zw/2 - buffer});
     }
-    else
+    else // Front
     {
-        return std::experimental::optional<Point>({p.x, center.y + yWidth/2 + buffer, p.z});
+        return std::experimental::optional<Point>({p.x, p.y, c.z + zw/2 + buffer});
     }
 }
