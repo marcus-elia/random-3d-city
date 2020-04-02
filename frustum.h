@@ -3,6 +3,7 @@
 
 #include "solid.h"
 #include "movableObject.h"
+#include "recPrism.h"
 
 class Frustum : public Solid, public MovableObject
 {

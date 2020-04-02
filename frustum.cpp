@@ -131,9 +131,10 @@ void Frustum::drawFaces() const
     glEnd();
 }
 
+// TODO need to actually fill this in. For now, it's pretending it's a rectangular prism
 std::experimental::optional<Point> Frustum::correctCollision(Point p, int buffer)
 {
-    return std::experimental::nullopt;
+    return correctRectangularPrismCollision(p, buffer, center, xWidth, yWidth, zWidth);
 }
 
 void Frustum::printDebugStats()
