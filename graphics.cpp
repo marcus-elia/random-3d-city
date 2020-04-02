@@ -175,7 +175,7 @@ void cursor(int x, int y)
 // state will be GLUT_UP or GLUT_DOWN
 void mouse(int button, int state, int x, int y)
 {
-
+    manager.reactToMouseClick();
     glutPostRedisplay();
 }
 
