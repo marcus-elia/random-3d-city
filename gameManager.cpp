@@ -34,6 +34,10 @@ void GameManager::draw() const
     {
         c->draw();
     }
+    for(std::shared_ptr<Missile> m : missiles)
+    {
+        m->draw();
+    }
 
 
     // Draw a red square under the player for debug
@@ -195,7 +199,7 @@ void GameManager::createMissile()
     Point velocity = {player.getLookingAt().x - location.x,
                       player.getLookingAt().y - location.y,
                       player.getLookingAt().z - location.z};
-    missiles.push_back(std::make_shared<Missile>(Missile(location, 10, velocity, 10)));
+    missiles.push_back(std::make_shared<Missile>(Missile(location, 5, velocity, 10)));
 }
 void GameManager::checkMissiles()
 {
