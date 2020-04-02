@@ -68,6 +68,11 @@ void Chunk::makeBuildings()
                     buildingType = UFO;
                     height =  (int)(perlinSeed*180 + r1*80 + r2*80);
                 }
+                else if(perlinSeed > 0.95 && r1 < 0.05)
+                {
+                    buildingType = CN;
+                    height =  (int)(perlinSeed*180 + r1*80 + r2*80);
+                }
                 else
                 {
                     buildingType = Plain;

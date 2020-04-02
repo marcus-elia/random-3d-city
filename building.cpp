@@ -87,6 +87,18 @@ void Building::initializeSolids()
                                                              sideLength/3, height/24.0, sideLength/3, edgeColor,
                                                              sideLength/4, sideLength/4)));
     }
+    else if(buildingType == CN)
+    {
+        Point center = {(double)topLeft.x + sideLength/2, (double)3*height/4, (double)topLeft.z + sideLength/2};
+        solids.push_back(std::make_shared<Cylinder>(Cylinder(center, color,
+                                                             sideLength/2, 3*height/2, sideLength/2, edgeColor)));
+        center = {center.x, center.y + 3*height/4 + height/24, center.z};
+        solids.push_back(std::make_shared<Cylinder>(Cylinder(center, color,
+                                                             sideLength, height/12, sideLength, edgeColor)));
+        center = {center.x, center.y + height/24 + height/2, center.z};
+        solids.push_back(std::make_shared<Cylinder>(Cylinder(center, color,
+                                                             sideLength/4, height, sideLength/4, edgeColor)));
+    }
 }
 
 std::vector<std::shared_ptr<Solid>> Building::getSolids() const
