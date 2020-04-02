@@ -77,5 +77,5 @@ void Missile::tick()
 }
 bool Missile::isOutOfBounds(Point playerLocation, int maxDistance)
 {
-    return location.y < radius || location.y > 512 || distanceFormula(location, playerLocation) > maxDistance;
+    return location.y < radius || location.y > 2048 || distanceFormula(location, playerLocation) > maxDistance;
 }
