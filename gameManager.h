@@ -8,6 +8,7 @@
 #include "recPrism.h"
 #include "player.h"
 #include "perlinNoiseGenerator.h"
+#include "missile.h"
 
 class GameManager
 {
@@ -24,6 +25,9 @@ private:
     std::vector<std::shared_ptr<Chunk>> currentChunks;
     int perlinSize;  // how many chunks before perlin repeats
     PerlinNoiseGenerator png;
+
+    // Missiles
+    std::vector<std::shared_ptr<Missile>> missiles;
 public:
     GameManager();
     GameManager(int inputChunkSize, int inputRenderRadius, int inputPerlinSize);
@@ -48,6 +52,12 @@ public:
     // Chunks
     double getPerlinValue(Point2D p); // the value of the Perlin noise map at that point
     void updateCurrentChunks();
+    // Returns a pointer to the chunk that p is in
+    std::shared_ptr<Chunk> pointToChunk(Point p);
+
+    // Missiles
+    void createMissile();
+    void checkMissiles();
 
     // Camera
     Vector3 getCameraLocation() const;
@@ -56,6 +66,7 @@ public:
 
     // Mouse
     void reactToMouseMovement(double theta);
+    void reactToMouseClick();
 
     void draw() const;
     void tick();

@@ -22,6 +22,10 @@ void GameManager::reactToMouseMovement(double theta)
     player.updateLookingAt(theta);
     player.setVelocity(wKey, aKey, sKey, dKey, rKey, cKey);
 }
+void GameManager::reactToMouseClick()
+{
+    createMissile();
+}
 
 
 void GameManager::draw() const
@@ -73,6 +77,13 @@ void GameManager::tick()
         //std::cout << player.getLocation().x << ", " << player.getLocation().z << std::endl;
         updateCurrentChunks();
     }
+
+    // The missiles move
+    for(std::shared_ptr<Missile> m : missiles)
+    {
+        m->tick();
+    }
+    checkMissiles();
 }
 
 Player GameManager::getPlayer() const
@@ -160,6 +171,64 @@ void GameManager::updateCurrentChunks()
             allSeenChunks[index] = std::make_shared<Chunk>(p, chunkSize, getPerlinValue(p));
         }
         currentChunks.push_back(allSeenChunks[index]);
+    }
+}
+std::shared_ptr<Chunk> GameManager::pointToChunk(Point p)
+{
+    int chunkIndex = pointToInt({(int)floor(p.x / chunkSize), (int)floor(p.z / chunkSize)});
+    if(allSeenChunks.count(chunkIndex) == 0)
+    {
+        chunkIndex = 0; // If it's out of bounds, just check the 0 chunk for now. can't hurt.
+    }
+    return allSeenChunks[chunkIndex];
+}
+
+
+// =========================
+//
+//        Missiles
+//
+// =========================
+void GameManager::createMissile()
+{
+    Point location = {player.getLocation().x, player.getLocation().y, player.getLocation().z};
+    Point velocity = {player.getLookingAt().x - location.x,
+                      player.getLookingAt().y - location.y,
+                      player.getLookingAt().z - location.z};
+    missiles.push_back(std::make_shared<Missile>(Missile(location, 10, velocity, 10)));
+}
+void GameManager::checkMissiles()
+{
+    int L = missiles.size();
+    int i = 0;
+    while(i < L)
+    {
+        std::shared_ptr<Missile> m = missiles[i];
+        Point playerLocation = {player.getLocation().x, player.getLocation().y, player.getLocation().z};
+
+        // If the missile went out of bounds without hitting anything, remove it
+        if(m->isOutOfBounds(playerLocation, renderRadius*chunkSize))
+        {
+            missiles.erase(missiles.begin() + i);
+            L -= 1;
+            i--;
+        }
+        // Check if the missile is hitting a building
+        else
+        {
+            std::shared_ptr<Chunk> c = pointToChunk(m->getLocation());
+            for(Building &b : c->getBuildings())
+            {
+                if(b.correctCollision(m->getLocation(), m->getRadius()))
+                {
+                    missiles.erase(missiles.begin() + i);
+                    L -= 1;
+                    i--;
+                    break;
+                }
+            }
+        }
+        i++;
     }
 }
 
