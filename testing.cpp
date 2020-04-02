@@ -1,17 +1,25 @@
+#ifndef RANDOM_3D_CITY_TESTING_CPP
+#define RANDOM_3D_CITY_TESTING_CPP
+
 #include <iostream>
 #include <cmath>
 #include "chunk.h"
 #include "perlinNoiseGenerator.h"
+#include "recPrism.h"
+
+#endif //RANDOM_3D_CITY_TESTING_CPP
 
 void testPointToInt();
 void testGetChunksAroundPoint();
 void testPerlinNoiseGenerator();
+void testCorrectRectangularPrismCollision();
 
 int main()
 {
     testPointToInt();
     testGetChunksAroundPoint();
     testPerlinNoiseGenerator();
+    testCorrectRectangularPrismCollision();
     return 0;
 }
 
@@ -147,5 +155,165 @@ void testPerlinNoiseGenerator()
             std::cout << d << ", ";
         }
         std::cout << std::endl;
+    }
+}
+
+void testCorrectRectangularPrismCollision()
+{
+    std::cout << std::endl << "Testing CorrectRectangularPrismCollision()" << std::endl;
+
+    bool passed = true;
+    Point p,c;
+    int buffer;
+    double xw, yw, zw;
+    Point obs, exp;
+
+    c = {0, 50, 0};
+    xw = 20;
+    yw = 100;
+    zw = 20;
+    buffer = 1;
+
+    // Points on Faces
+    // On front side
+    p = {0, 50, 10};
+    obs = correctRectangularPrismCollision(p, buffer, c, xw, yw, zw).value_or(Point({500,500,500}));
+    exp = {0, 50, 11};
+    if(distanceFormula(obs, exp) > 1)
+    {
+        passed = false;
+        std::cout << "Test FAILED for point on front face" << std::endl;
+        std::cout << "Expected " << exp.x << "," << exp.y << "," << exp.z << ", observed "
+        << obs.x << "," << obs.y << "," << obs.z << std::endl;
+        //std::cout << "Expected " << exp << ", observed " << obs << std::endl;
+    }
+    // On left side
+    p = {-10, 50, 0};
+    obs = correctRectangularPrismCollision(p, buffer, c, xw, yw, zw).value_or(Point({500,500,500}));
+    exp = {-11, 50, 0};
+    if(distanceFormula(obs, exp) > 1)
+    {
+        passed = false;
+        std::cout << "Test FAILED for point on left face" << std::endl;
+        std::cout << "Expected " << exp.x << "," << exp.y << "," << exp.z << ", observed "
+                  << obs.x << "," << obs.y << "," << obs.z << std::endl;
+    }
+    // On back side
+    p = {0, 50, -10};
+    obs = correctRectangularPrismCollision(p, buffer, c, xw, yw, zw).value_or(Point({500,500,500}));
+    exp = {0, 50, -11};
+    if(distanceFormula(obs, exp) > 1)
+    {
+        passed = false;
+        std::cout << "Test FAILED for point on back face" << std::endl;
+        std::cout << "Expected " << exp.x << "," << exp.y << "," << exp.z << ", observed "
+                  << obs.x << "," << obs.y << "," << obs.z << std::endl;
+    }
+    // On right side
+    p = {10, 50, 0};
+    obs = correctRectangularPrismCollision(p, buffer, c, xw, yw, zw).value_or(Point({500,500,500}));
+    exp = {11, 50, 0};
+    if(distanceFormula(obs, exp) > 1)
+    {
+        passed = false;
+        std::cout << "Test FAILED for point on right face" << std::endl;
+        std::cout << "Expected " << exp.x << "," << exp.y << "," << exp.z << ", observed "
+                  << obs.x << "," << obs.y << "," << obs.z << std::endl;
+    }
+    // On top side
+    p = {0, 100, 0};
+    obs = correctRectangularPrismCollision(p, buffer, c, xw, yw, zw).value_or(Point({500,500,500}));
+    exp = {0, 101, 0};
+    if(distanceFormula(obs, exp) > 1)
+    {
+        passed = false;
+        std::cout << "Test FAILED for point on top face" << std::endl;
+        std::cout << "Expected " << exp.x << "," << exp.y << "," << exp.z << ", observed "
+                  << obs.x << "," << obs.y << "," << obs.z << std::endl;
+    }
+    // On bottom side
+    p = {0, -1, 0};
+    obs = correctRectangularPrismCollision(p, buffer, c, xw, yw, zw).value_or(Point({500,500,500}));
+    exp = {0, -1, 0};
+    if(distanceFormula(obs, exp) > 1)
+    {
+        passed = false;
+        std::cout << "Test FAILED for point on bottom face" << std::endl;
+        std::cout << "Expected " << exp.x << "," << exp.y << "," << exp.z << ", observed "
+                  << obs.x << "," << obs.y << "," << obs.z << std::endl;
+    }
+
+    // Points inside Prism
+    // Close to front side
+    p = {0, 50, 8};
+    obs = correctRectangularPrismCollision(p, buffer, c, xw, yw, zw).value_or(Point({500,500,500}));
+    exp = {0, 50, 11};
+    if(distanceFormula(obs, exp) > 1)
+    {
+        passed = false;
+        std::cout << "Test FAILED for point inside front face" << std::endl;
+        std::cout << "Expected " << exp.x << "," << exp.y << "," << exp.z << ", observed "
+                  << obs.x << "," << obs.y << "," << obs.z << std::endl;
+        //std::cout << "Expected " << exp << ", observed " << obs << std::endl;
+    }
+    // In left side
+    p = {-8, 50, 0};
+    obs = correctRectangularPrismCollision(p, buffer, c, xw, yw, zw).value_or(Point({500,500,500}));
+    exp = {-11, 50, 0};
+    if(distanceFormula(obs, exp) > 1)
+    {
+        passed = false;
+        std::cout << "Test FAILED for point in left face" << std::endl;
+        std::cout << "Expected " << exp.x << "," << exp.y << "," << exp.z << ", observed "
+                  << obs.x << "," << obs.y << "," << obs.z << std::endl;
+    }
+    // In back side
+    p = {0, 50, -8};
+    obs = correctRectangularPrismCollision(p, buffer, c, xw, yw, zw).value_or(Point({500,500,500}));
+    exp = {0, 50, -11};
+    if(distanceFormula(obs, exp) > 1)
+    {
+        passed = false;
+        std::cout << "Test FAILED for point in back face" << std::endl;
+        std::cout << "Expected " << exp.x << "," << exp.y << "," << exp.z << ", observed "
+                  << obs.x << "," << obs.y << "," << obs.z << std::endl;
+    }
+    // In right side
+    p = {8, 50, 0};
+    obs = correctRectangularPrismCollision(p, buffer, c, xw, yw, zw).value_or(Point({500,500,500}));
+    exp = {11, 50, 0};
+    if(distanceFormula(obs, exp) > 1)
+    {
+        passed = false;
+        std::cout << "Test FAILED for point in right face" << std::endl;
+        std::cout << "Expected " << exp.x << "," << exp.y << "," << exp.z << ", observed "
+                  << obs.x << "," << obs.y << "," << obs.z << std::endl;
+    }
+    // in top side
+    p = {0, 95, 0};
+    obs = correctRectangularPrismCollision(p, buffer, c, xw, yw, zw).value_or(Point({500,500,500}));
+    exp = {0, 101, 0};
+    if(distanceFormula(obs, exp) > 1)
+    {
+        passed = false;
+        std::cout << "Test FAILED for point in top face" << std::endl;
+        std::cout << "Expected " << exp.x << "," << exp.y << "," << exp.z << ", observed "
+                  << obs.x << "," << obs.y << "," << obs.z << std::endl;
+    }
+    // in bottom side
+    p = {0, 5, 0};
+    obs = correctRectangularPrismCollision(p, buffer, c, xw, yw, zw).value_or(Point({500,500,500}));
+    exp = {0, -1, 0};
+    if(distanceFormula(obs, exp) > 1)
+    {
+        passed = false;
+        std::cout << "Test FAILED for point in bottom face" << std::endl;
+        std::cout << "Expected " << exp.x << "," << exp.y << "," << exp.z << ", observed "
+                  << obs.x << "," << obs.y << "," << obs.z << std::endl;
+    }
+
+    if(passed)
+    {
+        std::cout << "All tests passed." << std::endl;
     }
 }
