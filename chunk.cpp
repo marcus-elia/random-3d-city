@@ -30,6 +30,13 @@ void Chunk::makeBuildings()
     {
         for(int j = 0; j < sideLength / propertySize; j++)
         {
+            // If the building is too close to the origin, don't build it
+            if(abs(bottomLeft.x*sideLength + i*propertySize) < sideLength/3 &&
+               abs((bottomLeft.z + 1)*sideLength - (j+1)*propertySize) < sideLength/3)
+            {
+                continue;
+            }
+
             double r1 = (double)(rand() % 100) / 100;
             double r2 = (double)(rand() % 100) / 100;
 
