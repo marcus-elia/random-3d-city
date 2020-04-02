@@ -34,3 +34,8 @@ void DrawableObject::drawPoint(const Point &p) const
 {
     glVertex3f(p.x, p.y, p.z);
 }
+
+double distanceFormula(Point p1, Point p2)
+{
+    return sqrt((p1.x - p2.x)*(p1.x - p2.x) + (p1.y - p2.y)*(p1.y - p2.y) + (p1.z - p2.z)*(p1.z - p2.z));
+}

@@ -43,4 +43,6 @@ public:
     void drawPoint(const Point &p) const;
 };
 
+double distanceFormula(Point p1, Point p2);
+
 #endif //RANDOM_3D_CITY_DRAWABLEOBJECT_H
