@@ -3,8 +3,8 @@
 
 Player::Player()
 {
-    location = {0, 30, 60.0};
-    lookingAt = {0,30,0};
+    location = {0, 30, 0};
+    lookingAt = {0,30,-60};
     up = {0, 1, 0};
     speed = 4;
     velocity = {0,0,0};
