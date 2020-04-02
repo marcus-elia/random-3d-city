@@ -57,7 +57,7 @@ void GameManager::tick()
     // Check for the player hitting a building
     Point2D curPlayerChunk = player.whatChunk();
     std::shared_ptr<Chunk> c = allSeenChunks[pointToInt(curPlayerChunk)];
-    player.checkCollisionsAndCorrect(*c, 5);
+    player.checkCollisionsAndCorrect(*c, 1);
 
     // If the player is entering a different chunk
     if(curPlayerChunk != player.getCurrentChunkCoords())
@@ -185,4 +185,19 @@ int mod(int a, int m)
         return x + m;
     }
     return x;
+}
+
+void GameManager::printPlayerBuildingDebug()
+{
+    Vector3 v = player.getLocation();
+    std::cout << "Player location: " << v.x << "," << v.y << "," << v.z << std::endl;
+    Point2D curPlayerChunk = player.whatChunk();
+    std::shared_ptr<Chunk> c = allSeenChunks[pointToInt(curPlayerChunk)];
+    for(Building &b : c->getBuildings())
+    {
+        for(std::shared_ptr<Solid> s : b.getSolids())
+        {
+            s->printDebugStats();
+        }
+    }
 }

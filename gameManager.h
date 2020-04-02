@@ -62,6 +62,9 @@ public:
 
     void draw() const;
     void tick();
+
+    // Debug
+    void printPlayerBuildingDebug();
 };
 
 // Since % can return negatives

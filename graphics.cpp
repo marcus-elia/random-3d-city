@@ -128,6 +128,8 @@ void kbu(unsigned char key, int x, int y)
             break;
         case 'c': manager.setCKey(false);
             break;
+        case 'b' : manager.printPlayerBuildingDebug();
+            break;
     }
 
     glutPostRedisplay();
