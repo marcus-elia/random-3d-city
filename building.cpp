@@ -99,6 +99,27 @@ void Building::initializeSolids()
         solids.push_back(std::make_shared<Cylinder>(Cylinder(center, color,
                                                              sideLength/4, height, sideLength/4, edgeColor)));
     }
+    else if(buildingType == Hourglass)
+    {
+        Point center = {(double)topLeft.x + sideLength/2, (double)height/3, (double)topLeft.z + sideLength/2};
+        solids.push_back(std::make_shared<Frustum>(Frustum(center, color,
+                                                             sideLength, 2*height/3, sideLength, edgeColor,
+                                                             3*sideLength/4, 3*sideLength/4)));
+        center = {center.x, center.y + 2*height/3, center.z};
+        solids.push_back(std::make_shared<Frustum>(Frustum(center, color,
+                                                           3*sideLength/4, 2*height/3, 3*sideLength/4, edgeColor,
+                                                           sideLength, sideLength)));
+    }
+    else if(buildingType == Pyramid)
+    {
+        Point center = {(double)topLeft.x + sideLength/2.0, (double)height/2, (double)topLeft.z + sideLength/2};
+        solids.push_back(std::make_shared<RecPrism>(RecPrism(center, color,
+                                                             sideLength, height, sideLength, edgeColor)));
+        center = {center.x, center.y + height/2.0 + height/20.0, center.z};
+        solids.push_back(std::make_shared<Frustum>(Frustum(center, color,
+                                                           sideLength, height/10.0, sideLength, edgeColor,
+                                                           sideLength/20.0, sideLength/20.0)));
+    }
 }
 
 std::vector<std::shared_ptr<Solid>> Building::getSolids() const

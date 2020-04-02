@@ -10,7 +10,7 @@
 #include <vector>
 #include <memory>
 
-enum typeOfBuilding {Plain, House, Skyscraper, Empire, UFO, CN};
+enum typeOfBuilding {Plain, House, Skyscraper, Empire, UFO, CN, Hourglass, Pyramid};
 
 // int points used for the chunks
 // in the xz plane

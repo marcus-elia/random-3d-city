@@ -53,22 +53,32 @@ void Chunk::makeBuildings()
                     buildingType = House;
                     height = propertySize/2;
                 }
-                else if(r1 > 0.85 && perlinSeed > 0.7)
+                else if(r1 > 0.85 && perlinSeed > 0.75)
                 {
                     buildingType = Skyscraper;
                     height =  (int)(perlinSeed*180 + r1*80 + r2*80);
                 }
-                else if(0.1 < r1  && r1 < 0.15 && perlinSeed > 0.7)
+                else if(0.55 < r1 && r1 < 0.6 && perlinSeed > 0.4)
+                {
+                    buildingType = Pyramid;
+                    height =  (int)(perlinSeed*180 + r1*80 + r2*80);
+                }
+                else if(0.7 < r1 && r1 < 0.75 && perlinSeed > 0.65)
+                {
+                    buildingType = Hourglass;
+                    height =  (int)(perlinSeed*180 + r1*80 + r2*80);
+                }
+                else if(0.1 < r1  && r1 < 0.15 && perlinSeed > 0.65)
                 {
                     buildingType = Empire;
                     height =  (int)(perlinSeed*180 + r1*80 + r2*80);
                 }
-                else if(0.45 < r1 && r1 < 0.5 && perlinSeed > 0.7)
+                else if(0.45 < r1 && r1 < 0.5 && perlinSeed > 0.65)
                 {
                     buildingType = UFO;
                     height =  (int)(perlinSeed*180 + r1*80 + r2*80);
                 }
-                else if(perlinSeed > 0.95 && r1 < 0.05)
+                else if(perlinSeed > 0.95 && r1 < 0.05 && r2 > 0.9)
                 {
                     buildingType = CN;
                     height =  (int)(perlinSeed*180 + r1*80 + r2*80);
