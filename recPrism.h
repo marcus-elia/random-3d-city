@@ -24,6 +24,8 @@ public:
     void drawFaces() const;
 
     std::experimental::optional<Point> correctCollision(Point p, int buffer);
+
+    void printDebugStats();
 };
 
 std::experimental::optional<Point> correctRectangularPrismCollision(Point p, int buffer, Point c,

@@ -173,3 +173,11 @@ std::experimental::optional<Point> TriPrism::correctCollision(Point p, int buffe
     // Otherwise, assume it's near the base of the prism
     return std::experimental::optional<Point>({p.x, center.y - yWidth/2 - buffer, p.z});
 }
+
+void TriPrism::printDebugStats()
+{
+    std::cout<<"Triangular Prism at " << center.x << "," << center.y << "," << center.z << std::endl;
+    std::cout << "xWidth: " << xWidth << std::endl;
+    std::cout << "yWidth: " << xWidth << std::endl;
+    std::cout << "zWidth: " << xWidth << std::endl;
+}

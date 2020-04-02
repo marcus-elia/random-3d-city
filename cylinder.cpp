@@ -139,3 +139,11 @@ std::experimental::optional<Point> Cylinder::correctCollision(Point p, int buffe
                                                    center.z + (zWidth/2 + buffer)*sin(theta)});
     }
 }
+
+void Cylinder::printDebugStats()
+{
+    std::cout<<"Cylinder at " << center.x << "," << center.y << "," << center.z << std::endl;
+    std::cout << "xWidth: " << xWidth << std::endl;
+    std::cout << "yWidth: " << xWidth << std::endl;
+    std::cout << "zWidth: " << xWidth << std::endl;
+}

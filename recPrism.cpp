@@ -44,6 +44,22 @@ void RecPrism::draw() const
 {
     drawLines();
     drawFaces();
+
+    // Debugging: print a ring around the middle of each rectangle to
+    // prove that it knows where it is.
+    /*glDisable(GL_CULL_FACE);
+    glBegin(GL_TRIANGLE_FAN);
+    glColor4f(0,1,0,1);
+    drawPoint(center);
+    double x, z;
+    for(int i = 0; i < 7; i++)
+    {
+        x = center.x + xWidth*cos(i*2*PI/6);
+        z = center.z + zWidth*sin(i*2*PI/6);
+        drawPoint({x, center.y, z});
+    }
+    glEnd();
+    glEnable(GL_CULL_FACE);*/
 }
 
 void RecPrism::drawLines() const
@@ -129,8 +145,16 @@ void RecPrism::drawFaces() const
 // Wrapper function
 std::experimental::optional<Point> RecPrism::correctCollision(Point p, int buffer)
 {
-    correctRectangularPrismCollision(p, buffer, center,
+    return correctRectangularPrismCollision(p, buffer, center,
             xWidth, yWidth, zWidth);
+}
+
+void RecPrism::printDebugStats()
+{
+    std::cout<<"Rectangular Prism at " << center.x << "," << center.y << "," << center.z << std::endl;
+    std::cout << "xWidth: " << xWidth << std::endl;
+    std::cout << "yWidth: " << xWidth << std::endl;
+    std::cout << "zWidth: " << xWidth << std::endl;
 }
 
 // Static

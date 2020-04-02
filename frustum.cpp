@@ -130,3 +130,18 @@ void Frustum::drawFaces() const
     drawPoint(corners[7]);
     glEnd();
 }
+
+std::experimental::optional<Point> Frustum::correctCollision(Point p, int buffer)
+{
+    return std::experimental::nullopt;
+}
+
+void Frustum::printDebugStats()
+{
+    std::cout<<"Frustum at " << center.x << "," << center.y << "," << center.z << std::endl;
+    std::cout << "xWidth: " << xWidth << std::endl;
+    std::cout << "yWidth: " << xWidth << std::endl;
+    std::cout << "zWidth: " << xWidth << std::endl;
+    std::cout << "upperxWidth: " << upperXWidth << std::endl;
+    std::cout << "upperyWidth: " << upperZWidth << std::endl;
+}

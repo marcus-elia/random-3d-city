@@ -30,6 +30,8 @@ public:
     void drawFaces() const;
 
     std::experimental::optional<Point> correctCollision(Point p, int buffer);
+
+    void printDebugStats();
 };
 
 #endif //RANDOM_3D_CITY_CYLINDER_H

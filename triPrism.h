@@ -27,6 +27,8 @@ public:
     void drawFaces() const;
 
     std::experimental::optional<Point> correctCollision(Point p, int buffer);
+
+    void printDebugStats();
 };
 
 
