@@ -6,8 +6,6 @@ GameManager::GameManager()
     png = PerlinNoiseGenerator(10, 10, 1);
     chunkSize = 512;
     renderRadius = 5;
-    solids.push_back(std::unique_ptr<RecPrism>(new RecPrism({0, 50, 0}, {0.2,0,1,1},
-            30,100, 30, {1,1,1,1})));
     updateCurrentChunks();
 }
 GameManager::GameManager(int inputChunkSize, int inputRenderRadius, int inputPerlinSize)
@@ -28,15 +26,24 @@ void GameManager::reactToMouseMovement(double theta)
 
 void GameManager::draw() const
 {
-    for(auto &s : solids)
-    {
-        s->draw();
-    }
     for(auto &c : currentChunks)
     {
         c->draw();
     }
 
+
+    // Draw a red square under the player for debug
+    /*glDisable(GL_CULL_FACE);
+    Vector3 v = player.getLocation();
+    glBegin(GL_QUADS);
+    glColor4f(1,0,0,1);
+    glVertex3f(v.x + 20,3, v.z + 20);
+    glVertex3f(v.x - 20,3, v.z + 20);
+    glVertex3f(v.x - 20,3, v.z - 20);
+    glVertex3f(v.x + 20,3, v.z - 20);
+
+    glEnd();
+    glEnable(GL_CULL_FACE);*/
     // Make current chunk red for debug
     /*Point2D p = player.getCurrentChunkCoords();
     glBegin(GL_QUADS);
@@ -57,7 +64,7 @@ void GameManager::tick()
     // Check for the player hitting a building
     Point2D curPlayerChunk = player.whatChunk();
     std::shared_ptr<Chunk> c = allSeenChunks[pointToInt(curPlayerChunk)];
-    player.checkCollisionsAndCorrect(*c, 1);
+    player.checkCollisionsAndCorrect(*c, 5);
 
     // If the player is entering a different chunk
     if(curPlayerChunk != player.getCurrentChunkCoords())
@@ -72,10 +79,6 @@ Player GameManager::getPlayer() const
 {
     return player;
 }
-/*std::vector<std::unique_ptr<Solid>> GameManager::getSolids() const
-{
-    return solids;
-}*/
 bool GameManager::getWKey()
 {
     return wKey;
@@ -190,7 +193,7 @@ int mod(int a, int m)
 void GameManager::printPlayerBuildingDebug()
 {
     Vector3 v = player.getLocation();
-    std::cout << "Player location: " << v.x << "," << v.y << "," << v.z << std::endl;
+    std::cout << std::endl<< "Player location: " << v.x << "," << v.y << "," << v.z << std::endl;
     Point2D curPlayerChunk = player.whatChunk();
     std::shared_ptr<Chunk> c = allSeenChunks[pointToInt(curPlayerChunk)];
     for(Building &b : c->getBuildings())
@@ -199,5 +202,6 @@ void GameManager::printPlayerBuildingDebug()
         {
             s->printDebugStats();
         }
+        std::cout<<"End of Building" << std::endl;
     }
 }

@@ -17,8 +17,6 @@ private:
     // Controls
     bool wKey, aKey, sKey, dKey, rKey, cKey;
 
-    std::vector<std::unique_ptr<Solid>> solids;
-
     // Chunks
     int chunkSize;
     int renderRadius;
@@ -32,7 +30,6 @@ public:
 
     // Getters
     Player getPlayer() const;
-    std::vector<std::unique_ptr<Solid>> getSolids() const;
     bool getWKey();
     bool getAKey();
     bool getSKey();
