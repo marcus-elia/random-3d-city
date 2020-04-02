@@ -3,6 +3,7 @@
 
 #include "graphics.h"
 #include <cmath>
+#include <iostream>
 
 struct RGBAcolor
 {
@@ -18,6 +19,11 @@ struct Point
     double x;
     double y;
     double z;
+
+    std::ostream& operator<<(std::ostream& os)
+    {
+        os << "(" << x << "," << y << "," << z << ")";
+    }
 };
 
 class DrawableObject
