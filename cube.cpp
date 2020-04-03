@@ -51,6 +51,10 @@ void Cube::rotate(double thetaX, double thetaY, double thetaZ)
         rotatePointAroundPoint(p, center, thetaX, thetaY, thetaZ);
     }
 }
+void Cube::rotateSelf()
+{
+    rotate(rotationSpeed.x, rotationSpeed.y, rotationSpeed.z);
+}
 
 void Cube::lookAt(Point &p)
 {

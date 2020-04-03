@@ -20,6 +20,7 @@ public:
     void move(double deltaX, double deltaY, double deltaZ);
 
     void rotate(double thetaX, double thetaY, double thetaZ);
+    void rotateSelf(); // wrapper function, rotates by rotationSpeed
 
     void lookAt(Point &p);
 
