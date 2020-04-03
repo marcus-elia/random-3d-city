@@ -73,11 +73,35 @@ void display()
               camLook.x, camLook.y, camLook.z,  // center position (not gaze direction)
               camUp.x, camUp.y, camUp.z); // up vector
 
-    /*
-     * Draw here
-     */
+    // Draw in 3d
     draw_axes();
     manager.draw();
+
+
+    // Switch to 2d mode
+    // Code from https://www.youtube.com/watch?v=i1mp4zflkYo
+    glMatrixMode(GL_PROJECTION);
+    glPushMatrix();
+    glLoadIdentity();
+    gluOrtho2D(0.0,width,0.0,height);
+    glMatrixMode(GL_MODELVIEW);
+    glPushMatrix();
+    glLoadIdentity();
+
+    glDisable(GL_CULL_FACE);
+    glBegin(GL_QUADS);
+    glColor4f(0.8,0.1,0.1,1);
+    glVertex3f(width/2 + 5,height/2 + 5,0);
+    glVertex3f(width/2 - 5,height/2 + 5,0);
+    glVertex3f(width/2 - 5,height/2 - 5,0);
+    glVertex3f(width/2 + 5,height/2 - 5,0);
+    glEnd();
+    glEnable(GL_CULL_FACE);
+
+    glMatrixMode(GL_PROJECTION);
+    glPopMatrix();
+    glMatrixMode(GL_MODELVIEW);
+    glPopMatrix();
 
     glFlush();  // Render now
 }
