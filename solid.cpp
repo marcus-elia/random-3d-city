@@ -41,6 +41,10 @@ double Solid::getZWidth() const
 {
     return zWidth;
 }
+RGBAcolor Solid::getLineColor() const
+{
+    return lineColor;
+}
 
 void Solid::setCorners(std::vector<Point> inputCorners)
 {
@@ -57,6 +61,10 @@ void Solid::setYWidth(double inputYWidth)
 void Solid::setZWidth(double inputZWidth)
 {
     zWidth = inputZWidth;
+}
+void Solid::setLineColor(RGBAcolor inputLineColor)
+{
+    lineColor = inputLineColor;
 }
 
 double distance2d(Point p1, Point p2)
