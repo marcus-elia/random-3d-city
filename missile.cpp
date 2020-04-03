@@ -6,6 +6,7 @@ Missile::Missile()
     speed = 1;
     velocity = {0, -1, 0};
     radius = 10;
+    cube = Cube();
 }
 Missile::Missile(Point inputLocation, double inputSpeed, Point inputVelocity, double inputRadius)
 {
@@ -13,7 +14,7 @@ Missile::Missile(Point inputLocation, double inputSpeed, Point inputVelocity, do
     speed = inputSpeed;
     setVelocity(inputVelocity);
     radius = inputRadius;
-
+    cube = Cube(location, {1,1,1,1}, radius, {1,1,1,1}, {1,1,1});
 }
 
 // Getters
@@ -58,7 +59,7 @@ void Missile::setRadius(double inputRadius)
 
 void Missile::draw() const
 {
-    glDisable(GL_CULL_FACE);
+    /*glDisable(GL_CULL_FACE);
     glColor4f(0,1,0,1);
     glBegin(GL_QUADS);
     glVertex3f(location.x - 10, location.y, location.z - 10);
@@ -66,7 +67,9 @@ void Missile::draw() const
     glVertex3f(location.x + 10, location.y, location.z + 10);
     glVertex3f(location.x + 10, location.y, location.z - 10);
     glEnd();
-    glEnable(GL_CULL_FACE);
+    glEnable(GL_CULL_FACE);*/
+
+    cube.draw();
 }
 
 void Missile::tick()
@@ -74,6 +77,8 @@ void Missile::tick()
     location.x += velocity.x;
     location.y += velocity.y;
     location.z += velocity.z;
+    cube.move(velocity.x, velocity.y, velocity.z);
+    cube.rotateSelf();
 }
 bool Missile::isOutOfBounds(Point playerLocation, int maxDistance)
 {

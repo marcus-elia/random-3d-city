@@ -2,6 +2,7 @@
 #define RANDOM_3D_CITY_MISSILE_H
 
 #include "drawableObject.h"
+#include "cube.h"
 
 class Missile
 {
@@ -10,6 +11,7 @@ private:
     double speed;
     Point velocity;
     double radius;
+    Cube cube;
 public:
     Missile();
     Missile(Point inputLocation, double inputSpeed, Point inputVelocity, double inputRadius);
