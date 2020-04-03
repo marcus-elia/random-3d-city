@@ -70,7 +70,7 @@ void Building::initializeSolids()
                                                            sideLength/3, sideLength/3)));
         center = {center.x, center.y + height/12.0 + height/4.0, center.z};
         solids.push_back(std::make_shared<RecPrism>(RecPrism(center, gray,
-                                                             5, height/2.0, 5, edgeColor)));
+                                                             5, height/2.0, 5, gray)));
     }
     else if(buildingType == UFO)
     {
