@@ -13,3 +13,5 @@ Click either mouse button to shoot a missile.
 If a missile hits a building, the building be colored.
 
 Have fun exploring and coloring the city.
+
+Press Escape or move the mouse super fast off the window to quit.
