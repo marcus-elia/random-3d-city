@@ -10,6 +10,7 @@ Cube::Cube()
     color = {1,1,1,1};
     lineColor = {1,1,1,1};
     rotationSpeed = {1,1,1};
+    initializeCorners();
 }
 Cube::Cube(Point inputCenter, RGBAcolor inputColor, double inputSideLength, RGBAcolor inputLineColor,
 Point inputRotationSpeed) :
@@ -17,6 +18,7 @@ RecPrism(inputCenter, inputColor, inputSideLength, inputSideLength, inputSideLen
 {
     sideLength = inputSideLength;
     rotationSpeed = inputRotationSpeed;
+    initializeCorners();
 }
 
 void Cube::initializeCorners()
