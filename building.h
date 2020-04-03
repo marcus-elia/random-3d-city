@@ -60,6 +60,10 @@ public:
     // buffer of the solid). If it finds one, it returns that solid's corrected point,
     // and doesn't check any more. If none of the solids have a problem, it returns nullopt.
     std::experimental::optional<Point> correctCollision(Point p, int buffer);
+
+    // Use this when a missile hits the building. Makes all of the solids
+    // have the same color as the building
+    void giveSolidsColor();
 };
 
 

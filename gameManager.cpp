@@ -226,6 +226,7 @@ void GameManager::checkMissiles()
                 if(b.correctCollision(m->getLocation(), m->getRadius()))
                 {
                     missiles.erase(missiles.begin() + i);
+                    b.giveSolidsColor();
                     L -= 1;
                     i--;
                     break;
