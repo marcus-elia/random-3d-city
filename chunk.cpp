@@ -124,7 +124,8 @@ void Chunk::draw() const
     {
         glColor4f(0, 1, 0.8, 1);
     }*/
-    glColor4f(perlinSeed, 0, 1, 1);
+    //glColor4f(perlinSeed, 0, 1, 1);
+    glColor4f(0.5, 0.5, 0.5, 1);
     glVertex3f(sideLength*bottomLeft.x,0, sideLength*bottomLeft.z);
     glVertex3f(sideLength*bottomLeft.x,0, sideLength*bottomLeft.z + sideLength);
     glVertex3f(sideLength*bottomLeft.x + sideLength,0, sideLength*bottomLeft.z + sideLength);
